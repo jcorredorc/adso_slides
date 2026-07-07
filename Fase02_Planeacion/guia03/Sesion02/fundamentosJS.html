@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fundamentos de JavaScript</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/monokai.min.css">
+    <link rel="stylesheet" href="./fundamentosJS.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section data-background-gradient="linear-gradient(to bottom, #282a36, #44475a)">
+                <h1 class="main-title">Fundamentos de JavaScript</h1>
+                <p><span class="accent">&lt;</span> HELLO WORLD <span class="accent">/&gt;</span></p>
+                <div class="navigation-hint">Usa las flechas del teclado para navegar</div>
+            </section>
+
+            <section>
+                <h2>¿Qué vamos a aprender?</h2>
+                <ol class="index-list">
+                    <li><span class="accent">Introducción a JavaScript:</span> Historia y usos principales</li>
+                    <li><span class="accent">Variables y tipos de datos:</span> Cómo almacenar y manejar información</li>
+                    <li><span class="accent">Operadores:</span> Realizar operaciones con datos</li>
+                    <li><span class="accent">Estructuras de control:</span> Condicionales y bucles</li>
+                    <li><span class="accent">Ejemplos prácticos:</span> Aplicando lo aprendido</li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>¿Qué es JavaScript?</h2>
+                <ul class="content-list">
+                    <li class="fragment">JavaScript es un lenguaje de programación <span class="accent">interpretado</span> que se ejecuta principalmente en el navegador web.</li>
+                    <li class="fragment">Fue creado en <span class="accent">1995</span> por Brendan Eich en solo 10 días mientras trabajaba en Netscape.</li>
+                    <li class="fragment">A pesar de su nombre, <span class="accent">no tiene relación directa con Java</span>. Son lenguajes completamente diferentes.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>¿Por qué JavaScript?</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3 class="card-title-orange">Ubicuidad</h3>
+                        <p>Presente en casi todas las páginas web modernas.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title-blue">Versatilidad</h3>
+                        <p>Frontend, backend, móvil, escritorio, IoT...</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title-green">Comunidad</h3>
+                        <p>Gran comunidad de desarrolladores y recursos.</p>
+                    </div>
+                </div>
+                <p class="fragment source-note">
+                    * Es el lenguaje más utilizado según la encuesta anual de Stack Overflow desde 2013.
+                </p>
+            </section>
+
+            <section>
+                <h2>Evolución de JavaScript</h2>
+                <p class="sub-text">A lo largo de los años, JavaScript ha evolucionado significativamente:</p>
+                <ul class="evolution-list">
+                    <li><strong>1995:</strong> Nace como Mocha, luego LiveScript</li>
+                    <li><strong>1997:</strong> Se establece el estándar <span class="accent">ECMAScript</span></li>
+                    <li><strong>2009:</strong> ES5 introduce mejoras importantes</li>
+                    <li><strong>2015:</strong> <span class="accent">ES6 / ES2015</span> revoluciona el lenguaje</li>
+                    <li>Actualización anual desde entonces</li>
+                </ul>
+                <div class="fragment highlight-box">
+                    Hoy aprenderemos la sintaxis moderna de JavaScript (<strong>ES6+</strong>)
+                </div>
+            </section>
+
+            <section>
+                <h2>Integración en la web</h2>
+                <p class="source-note" style="margin-bottom: 5px;">Tres formas principales de incluir JavaScript en una página web:</p>
+                <div class="grid-3">
+                    <div>
+                        <h4 class="inline-h4 color-pink">1. Interno</h4>
+                        <pre><code class="language-html">&lt;script&gt;
+  alert("¡Hola!");
+&lt;/script&gt;</code></pre>
+                    </div>
+                    <div>
+                        <h4 class="inline-h4 color-blue">2. Externo</h4>
+                        <pre><code class="language-html">&lt;script src="app.js"&gt;
+&lt;/script&gt;</code></pre>
+                    </div>
+                    <div>
+                        <h4 class="inline-h4 color-green">3. Inline</h4>
+                        <pre><code class="language-html">&lt;button onclick="alert('¡OK!')"&gt;
+  Clic
+&lt;/button&gt;</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Variables en JavaScript</h2>
+                <p class="sub-text">Las variables son contenedores para almacenar datos que podemos usar y modificar en nuestro programa.</p>
+                <pre><code class="language-javascript">// Sintaxis básica
+nombreVariable = valor;</code></pre>
+                <div class="highlight-box" style="margin-top: 15px;">
+                    En JavaScript moderno, usamos <span class="accent">var</span>, <span class="accent">let</span> o <span class="accent">const</span> para declarar variables antes de usarlas.
+                </div>
+            </section>
+
+            <section>
+                <h2>Declaración de variables</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h3 class="inline-h3 color-red">var</h3>
+                        <p class="card-meta">Tradicional (pre-ES6)</p>
+                        <pre><code class="language-javascript">var edad = 18;
+var nombre = "Ana";</code></pre>
+                        <p class="card-footer-text">Ámbito global o de función.</p>
+                    </div>
+                    <div class="card border-highlight-green">
+                        <h3 class="inline-h3 color-green">let</h3>
+                        <p class="card-meta">Moderna recomendada</p>
+                        <pre><code class="language-javascript">let puntos = 75;
+let activo = true;</code></pre>
+                        <p class="card-footer-text">Ámbito de bloque local.</p>
+                    </div>
+                    <div class="card">
+                        <h3 class="inline-h3 color-yellow">const</h3>
+                        <p class="card-meta">Valores fijos</p>
+                        <pre><code class="language-javascript">const PI = 3.1416;
+const URL = "https://";</code></pre>
+                        <p class="card-footer-text">No se puede reasignar.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Ejemplos de Variables</h2>
+                <pre><code class="language-javascript">// Usando let (valores mutables)
+let contador = 0;
+contador = contador + 1; // Incremento válido
+
+// Usando const (valores inmutables)
+const GRAVEDAD = 9.8;
+// GRAVEDAD = 10; // Error: Asignación a variable constante</code></pre>
+            </section>
+
+            <section>
+                <h2>¿Cuándo usar cada tipo?</h2>
+                <ul class="content-list">
+                    <li><span class="accent">var:</span> Evitar en código moderno por problemas de Scope o ámbito de función.</li>
+                    <li><span class="accent">let:</span> Para variables cuyo valor cambiará (contadores, acumuladores, loops).</li>
+                    <li><span class="accent">const:</span> Para variables de solo lectura, objetos o funciones fijas estructuradas.</li>
+                </ul>
+                <div class="highlight-box fragment" style="margin-top: 20px;">
+                    <strong>Buenas prácticas:</strong> Usa <code class="accent">const</code> por defecto. Cambia a <code class="accent">let</code> solo si la lógica requiere reasignar el valor en memoria.
+                </div>
+            </section>
+
+            <section>
+                <h2>Tipos de datos básicos</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4 class="card-category-title color-purple">Primitivos</h4>
+                        <ul class="card-inner-list">
+                            <li><strong>String:</strong> <code class="accent">"Texto"</code></li>
+                            <li><strong>Number:</strong> <code class="accent">42</code> o <code class="accent">3.14</code></li>
+                            <li><strong>Boolean:</strong> <code class="accent">true</code> / <code class="accent">false</code></li>
+                            <li><strong>undefined:</strong> No asignado</li>
+                            <li><strong>null:</strong> Vacío intencional</li>
+                            <li><strong>Symbol</strong> / <strong>BigInt</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-category-title color-orange">Complejos / Referencia</h4>
+                        <ul class="card-inner-list">
+                            <li><strong>Object:</strong> Estructuras clave-valor</li>
+                            <li><strong>Array:</strong> Listas ordenadas <code class="accent">[1,2]</code></li>
+                            <li><strong>Function:</strong> Bloques ejecutables</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Tipos de datos: Ejemplos</h2>
+                <pre><code class="language-javascript">// Cadenas y números
+let usuario = "María";
+let edad = 28;
+let frase = `${usuario} tiene ${edad} años`; // Interpolación
+
+// Booleanos y nulos
+let premium = true;
+let descuento = null; 
+
+// Objetos complejos
+let curso = {
+  titulo: "JavaScript",
+  duracion: 40,
+  activo: true
+};</code></pre>
+            </section>
+
+            <section>
+                <h2>Tipado dinámico</h2>
+                <p class="sub-text">JavaScript infiere el tipo dinámicamente y permite mutar el tipo de la variable en ejecución:</p>
+                <pre><code class="language-javascript">let valor = 100;      // Tipo inicial: Number
+valor = "Cien";       // Cambia a: String
+valor = false;        // Cambia a: Boolean
+valor = { num: 100 }; // Cambia a: Object</code></pre>
+                <p class="error-warning-text">* Brinda velocidad de desarrollo pero exige rigurosidad para mitigar bugs lógicos.</p>
+            </section>
+
+            <section>
+                <h2>Operador typeof</h2>
+                <p class="sub-text">Retorna una cadena indicando el tipo del operando actual:</p>
+                <pre><code class="language-javascript">console.log(typeof "Hola");     // "string"
+console.log(typeof 4.5);        // "number"
+console.log(typeof true);       // "boolean"
+console.log(typeof [1, 2]);     // "object"
+console.log(typeof null);       // "object" (Peculiaridad nativa)
+console.log(typeof undefined);  // "undefined"</code></pre>
+            </section>
+
+            <section>
+                <h2>Operadores esenciales</h2>
+                <div class="grid-3 table-font">
+                    <div class="card">
+                        <h4 class="card-mini-title color-pink">Matemáticos</h4>
+                        <ul class="card-inner-list-tight">
+                            <li><code class="accent">+</code>, <code class="accent">-</code>, <code class="accent">*</code>, <code class="accent">/</code></li>
+                            <li><code class="accent">%</code> Resto división</li>
+                            <li><code class="accent">**</code> Potencia</li>
+                            <li><code class="accent">++</code>, <code class="accent">--</code></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-mini-title color-green">Asignación</h4>
+                        <ul class="card-inner-list-tight">
+                            <li><code class="accent">=</code> Directa</li>
+                            <li><code class="accent">+=</code> Auto-suma</li>
+                            <li><code class="accent text-nowrap">-=</code> Auto-resta</li>
+                            <li><code class="accent">*=</code> Auto-mult.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-mini-title color-yellow">Comparación</h4>
+                        <ul class="card-inner-list-tight">
+                            <li><code class="accent">==</code> Igual valor</li>
+                            <li><code class="accent">===</code> Estricto</li>
+                            <li><code class="accent">!=</code> Distinto</li>
+                            <li><code class="accent text-nowrap">!==</code> Estricto</li>
+                            <li><code class="accent">&gt;</code>, <code class="accent">&lt;</code>, <code class="accent">&gt;=</code>, <code class="accent">&lt;=</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Ejemplos de Operadores</h2>
+                <pre><code class="language-javascript">// Cálculos aritméticos comunes
+let calculo = (10 * 2) + 5; // 25
+let resto = 15 % 4;         // 3
+
+// Operaciones de auto-asignación abreviadas
+let total = 50;
+total += 10; // total = 60
+total *= 2;  // total = 120
+
+// Incrementos unitarios
+let pasos = 0;
+pasos++; // pasos = 1</code></pre>
+            </section>
+
+            <section>
+                <h2>Comparación Estricta</h2>
+                <pre><code class="language-javascript">let num = 10;
+let str = "10";
+
+console.log(num == str);   // true  (Compara solo valor)
+console.log(num === str);  // false (Estricto: diferente tipo de dato)
+console.log(num !== str);  // true  (Efectivamente son distintos en tipo)
+
+let limite = 18;
+console.log(limite >= 18); // true</code></pre>
+                <div class="highlight-box" style="font-size:0.75em; margin-top:10px;">
+                    <strong>Regla de oro:</strong> Emplear siempre triple igualdad (<code class="accent">===</code>) para evitar fallos por coerción implícita de tipos.
+                </div>
+            </section>
+
+            <section>
+                <h2>Operadores Lógicos</h2>
+                <div class="grid-3 card-meta">
+                    <div class="card">
+                        <h4 class="card-mini-title color-pink">AND (&&)</h4>
+                        <p>Evalúa true solo si todos los operandos son ciertos.</p>
+                        <pre><code class="language-javascript">let ok = true && false; // false</code></pre>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-mini-title color-blue">OR (||)</h4>
+                        <p>Evalúa true si al menos un operando es cierto.</p>
+                        <pre><code class="language-javascript">let ok = true || false; // true</code></pre>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-mini-title color-green">NOT (!)</h4>
+                        <p>Invierte el valor de cualquier booleano.</p>
+                        <pre><code class="language-javascript">let invisible = !true; // false</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Precedencia de Operadores</h2>
+                <p class="source-note" style="margin:0 0 5px 0;">Jerarquía de resolución nativa (Mayor a Menor prioridad):</p>
+                <ol class="precedence-list">
+                    <li>Agrupación: <code class="accent">()</code></li>
+                    <li>Post-fijos: <code class="accent">++, --</code></li>
+                    <li>Lógicos Unarios: <code class="accent">!</code></li>
+                    <li>Aritméticos Top: <code class="accent">**, *, /, %</code></li>
+                    <li>Aritméticos Base: <code class="accent">+, -</code></li>
+                    <li>Relacionales: <code class="accent">&lt;, &gt;, &lt;=, &gt;=</code></li>
+                    <li>Igualdad: <code class="accent">==, ===, !=, !==</code></li>
+                    <li>Lógico AND: <code class="accent">&amp;&amp;</code></li>
+                    <li>Lógico OR: <code class="accent">||</code></li>
+                    <li>Asignaciones: <code class="accent">=, +=, -=</code></li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>Estructuras de Control</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4 class="card-category-title color-orange">Bifurcaciones</h4>
+                        <ul class="card-inner-list">
+                            <li><strong>if / else if / else</strong></li>
+                            <li><strong>switch</strong> (Mapeos discretos)</li>
+                            <li><strong>Operador Ternario</strong></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-category-title color-green">Bucles / Ciclos</h4>
+                        <ul class="card-inner-list">
+                            <li><strong>for</strong> / <strong>for...of</strong> / <strong>for...in</strong></li>
+                            <li><strong>while</strong> (Evaluación previa)</li>
+                            <li><strong>do...while</strong> (Post-evaluación)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Condicional if / else</h2>
+                <pre><code class="language-javascript">let score = 85;
+let rango;
+
+if (score >= 90) {
+  rango = "A";
+} else if (score >= 70) {
+  rango = "B";
+} else if (score >= 50) {
+  rango = "C";
+} else {
+  rango = "F";
+}
+console.log(rango); // Imprime: "B"</code></pre>
+            </section>
+
+            <section>
+                <h2>Estructura Switch</h2>
+                <pre><code class="language-javascript">let codigoDia = 2;
+let diaTexto = "";
+
+switch (codigoDia) {
+  case 1: diaTexto = "Lunes"; break;
+  case 2: diaTexto = "Martes"; break;
+  case 3: diaTexto = "Miércoles"; break;
+  default: diaTexto = "Fin de semana u otro día";
+}
+console.log(diaTexto); // Imprime: "Martes"</code></pre>
+            </section>
+
+            <section>
+                <h2>Criterios: if vs switch</h2>
+                <div class="grid-2 sub-text">
+                    <div class="card">
+                        <h4 class="card-mini-title color-blue">Usa IF para:</h4>
+                        <ul class="card-inner-list">
+                            <li>Rangos numéricos variables o dinámicos.</li>
+                            <li>Condiciones complejas combinadas con operadores lógicos.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 class="card-mini-title color-yellow">Usa SWITCH para:</h4>
+                        <ul class="card-inner-list">
+                            <li>Comparaciones directas frente a constantes.</li>
+                            <li>Estructuras con múltiples opciones fijas uniformes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Operador Ternario</h2>
+                <p class="sub-text">Sintaxis compacta de una sola línea ideal para asignaciones rápidas:</p>
+                <pre><code class="language-javascript">// Estructura: condicion ? expresionTrue : expresionFalse;
+
+let edad = 21;
+let estado = (edad >= 18) ? "Acceso Permitido" : "Denegado";
+console.log(estado); // "Acceso Permitido"
+
+let temp = 32;
+console.log(`Clima ${temp > 30 ? "Cálido" : "Templado"}`);</code></pre>
+            </section>
+
+            <section>
+                <h2>Bucle Clásico: for</h2>
+                <p class="sub-text">Ejecuta un bloque un número conocido de veces:</p>
+                <pre><code class="language-javascript">// Contador básico del 1 al 3
+for (let i = 1; i <= 3; i++) {
+  console.log(i); // Imprime: 1, 2, 3
+}
+
+// Recorrido clásico indexado de arrays
+let items = ["A", "B"];
+for (let i = 0; i < items.length; i++) {
+  console.log(items[i]);
+}</code></pre>
+            </section>
+
+            <section>
+                <h2>Bucle while</h2>
+                <p class="sub-text">Itera indefinidamente mientras la condición sea verdadera:</p>
+                <pre><code class="language-javascript">let pasos = 1;
+while (pasos <= 3) {
+  console.log(pasos);
+  pasos++; // Condición de salida obligatoria
+}</code></pre>
+                <div class="highlight-box error-highlight">
+                    <strong>Peligro:</strong> Omitir el incremento generará un bucle infinito que colgará el navegador.
+                </div>
+            </section>
+
+            <section>
+                <h2>Bucle do...while</h2>
+                <p class="sub-text">Garantiza de forma nativa que el cuerpo se procese **al menos una vez**:</p>
+                <pre><code class="language-javascript">let num = 10;
+do {
+  console.log("Ejecución garantizada"); 
+  num++;
+} while (num < 5); // Evalúa false, pero ya se ejecutó 1 vez.</code></pre>
+            </section>
+
+            <section>
+                <h2>Variantes: for...of y for...in</h2>
+                <div class="grid-2 sub-text">
+                    <div>
+                        <h4 class="card-mini-title color-green">for...of</h4>
+                        <p class="source-note">Accede a los <strong>valores</strong> directos de una colección.</p>
+                        <pre><code class="language-javascript">let lista = ["X", "Y"];
+for (let val of lista) {
+  console.log(val); // "X", "Y"
+}</code></pre>
+                    </div>
+                    <div>
+                        <h4 class="card-mini-title color-orange">for...in</h4>
+                        <p class="source-note">Accede a las <strong>claves</strong> o propiedades de un objeto.</p>
+                        <pre><code class="language-javascript">let user = { id: 1, rol: "admin" };
+for (let key in user) {
+  console.log(`${key}: ${user[key]}`);
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Resumen de Estructuras Cíclicas</h2>
+                <table class="summary-table">
+                    <thead>
+                        <tr class="table-header-row">
+                            <th style="padding: 6px;">Bucle</th>
+                            <th style="padding: 6px;">Uso sugerido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-border-bottom">
+                            <td style="padding: 6px;"><strong>for</strong></td>
+                            <td>Número exacto de pasos determinados o manipulación explícita de índices.</td>
+                        </tr>
+                        <tr class="table-border-bottom">
+                            <td style="padding: 6px;"><strong>while</strong></td>
+                            <td>La cantidad de ejecuciones depende de factores dinámicos externos.</td>
+                        </tr>
+                        <tr class="table-border-bottom">
+                            <td style="padding: 6px;"><strong>do...while</strong></td>
+                            <td>Casos donde se requiere operar antes de la validación lógica inicial.</td>
+                        </tr>
+                        <tr class="table-border-bottom">
+                            <td style="padding: 6px;"><strong>for...of</strong></td>
+                            <td>Lectura limpia y directa de colecciones tipo Array sin usar contadores.</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 6px;"><strong>for...in</strong></td>
+                            <td>Inspección de atributos de configuración dentro de un Objeto JavaScript.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Caso Práctico 1: Promedios</h2>
+                <pre><code class="language-javascript">let notas = [85, 90, 78, 92, 88];
+let suma = 0;
+
+for (let i = 0; i < notas.length; i++) {
+  suma += notas[i];
+}
+
+let promedio = suma / notas.length;
+let rango;
+
+if (promedio >= 90) rango = "A";
+else if (promedio >= 80) rango = "B";
+else rango = "C";
+
+console.log(`Promedio final: ${promedio} -> Equivale a: ${rango}`);</code></pre>
+            </section>
+
+            <section>
+                <h2>Caso Práctico 2: Números Primos</h2>
+                <pre><code class="language-javascript">function esPrimo(numero) {
+  if (numero < 2) return false;
+  
+  for (let i = 2; i <= Math.sqrt(numero); i++) {
+    if (numero % i === 0) return false;
+  }
+  return true;
+}
+
+let test = [2, 3, 4, 5];
+test.forEach(n => console.log(`${n} primo: ${esPrimo(n)}`));</code></pre>
+            </section>
+
+            <section>
+                <h2>Preguntas Metacognitivas</h2>
+                <div class="metacognition-container">
+                    <p><strong>1. ¿Diferencia operativa entre let y const?</strong><br>
+                    <span class="accent">let</span> habilita reasignación de primitivos en memoria. <span class="accent">const</span> bloquea la reasignación de la referencia (aunque permite mutar propiedades de arrays u objetos).</p>
+                    
+                    <p><strong>2. ¿Cuándo priorizar switch sobre estructuras condicionales anidadas?</strong><br>
+                    Cuando se evalúan múltiples casos discretos e inmutables para una misma variable, optimizando legibilidad.</p>
+                    
+                    <p><strong>3. ¿Consecuencias de los bucles infinitos en producción?</strong><br>
+                    Provocan desbordamiento de pila en el hilo de ejecución, congelando por completo la interfaz gráfica (UI).</p>
+                </div>
+            </section>
+
+            <section data-background-gradient="linear-gradient(to top, #282a36, #6272a4)">
+                <h1 class="main-title" style="color: #50fa7b;">¡Gracias por su atención!</h1>
+                <p style="margin-top: 40px;">¿Espacio para dudas o consultas?</p>
+                <div class="coffee-icon">☕</div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/plugin/highlight/highlight.min.js"></script>
+    <script src="./fundamentosJS.js"></script>
+</body>
+</html>

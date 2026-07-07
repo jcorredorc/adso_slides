@@ -1,0 +1,185 @@
+/* Hoja de Estilos Externa para Presentación de Fundamentos JS */
+
+.reveal pre {
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    margin: 10px auto;
+    width: 100%;
+    max-width: 900px;
+}
+
+/* REGLAS CLAVE: Prevención absoluta de Scrollbars en bloques de código */
+.reveal pre code {
+    font-size: 0.55em !important; 
+    line-height: 1.25em !important;
+    max-height: 420px !important;
+    overflow: hidden !important; /* Elimina barras de scroll internas */
+    word-wrap: break-word;
+    white-space: pre-wrap; /* Rompe líneas automáticamente para encajar en pantalla */
+    padding: 12px;
+}
+
+.reveal blockquote {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid #f1fa8c;
+    padding: 10px 20px;
+}
+
+/* Diseño de Rejillas */
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Tarjetas Informativas */
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 0.75em;
+}
+
+.reveal .card pre code {
+    font-size: 0.5em !important;
+    padding: 5px;
+}
+
+/* Clases Útiles y Paleta Dracula */
+.accent {
+    color: #ff79c6;
+    font-weight: bold;
+}
+
+.highlight-box {
+    background-color: rgba(241, 250, 140, 0.15);
+    border: 1px solid #f1fa8c;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.8em;
+}
+
+.error-highlight {
+    color: #ff5555;
+}
+
+/* Tipografías y Escalas Globales */
+.reveal h2 {
+    font-size: 1.6em;
+    margin-bottom: 20px;
+}
+
+.reveal p, .reveal li {
+    font-size: 0.85em;
+}
+
+.main-title {
+    font-size: 2.2em !important;
+}
+
+.navigation-hint {
+    font-size: 0.5em;
+    margin-top: 80px;
+    color: #6272a4;
+}
+
+.index-list {
+    line-height: 1.5;
+    font-size: 0.8em;
+}
+
+.content-list {
+    font-size: 0.8em;
+    line-height: 1.5;
+}
+
+.evolution-list {
+    font-size: 0.7em;
+    line-height: 1.4;
+}
+
+.sub-text {
+    font-size: 0.75em;
+}
+
+.source-note {
+    font-size: 0.65em;
+    margin-top: 30px;
+    color: #6272a4;
+}
+
+.error-warning-text {
+    color: #ff5555;
+    font-size: 0.7em;
+    margin-top: 10px;
+}
+
+/* Componentes de Tarjetas específicos */
+.card-title-orange { color: #ffb86c; font-size: 1.1em; }
+.card-title-blue { color: #8be9fd; font-size: 1.1em; }
+.card-title-green { color: #50fa7b; font-size: 1.1em; }
+.card-category-title { margin: 5px; }
+.card-mini-title { margin: 2px; }
+.card-meta { font-size: 0.65em; }
+.card-inner-list { padding-left: 15px; margin: 0; }
+.card-inner-list-tight { padding-left: 12px; }
+.card-footer-text { font-size: 0.75em; margin: 2px; }
+
+.inline-h3 { font-size: 1.1em; margin: 2px; }
+.inline-h4 { font-size: 0.7em; margin: 2px; }
+
+.color-pink { color: #ff79c6; }
+.color-blue { color: #8be9fd; }
+.color-green { color: #50fa7b; }
+.color-red { color: #ff5555; }
+.color-yellow { color: #f1fa8c; }
+.color-purple { color: #bd93f9; }
+.color-orange { color: #ffb86c; }
+
+.table-font { font-size: 0.6em; }
+.border-highlight-green { border: 1px solid #50fa7b; }
+
+/* Lista de Precedencias */
+.precedence-list {
+    font-size: 0.52em;
+    column-count: 2;
+    line-height: 1.4;
+    margin: 0;
+    padding-left: 20px;
+}
+
+/* Tablas Resumen */
+.summary-table {
+    font-size: 0.48em;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-header-row {
+    color: #ff79c6;
+    border-bottom: 2px solid #6272a4;
+}
+
+.table-border-bottom {
+    border-bottom: 1px solid #44475a;
+}
+
+/* Contenedor Final */
+.metacognition-container {
+    font-size: 0.65em;
+    text-align: left;
+    line-height: 1.35;
+}
+
+.coffee-icon {
+    font-size: 2em;
+    margin-top: 20px;
+}
