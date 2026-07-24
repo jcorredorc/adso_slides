@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Aprendizaje 3 - Presentación</title>
+    <!-- Reveal.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/night.min.css">
+    <!-- Highlight.js para código -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- ============================================================ -->
+            <!-- DIAPOSITIVA DE TÍTULO -->
+            <!-- ============================================================ -->
+            <section>
+                <h1>Guía de Aprendizaje 3</h1>
+                <h2>Análisis y Desarrollo de Software</h2>
+                <h3>Construcción de software integrador de tecnologías orientadas a servicios</h3>
+                <p><small>Fase de Planeación - AP3: Estructurar procesos lógicos para la construcción de algoritmos</small></p>
+                <p><small>Duración: 240 horas (96 técnicas + 144 claves)</small></p>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- INTRODUCCIÓN -->
+            <!-- ============================================================ -->
+            <section>
+                <h2>Presentación de la Guía</h2>
+                <ul>
+                    <li>Competencia técnica: <strong>Evaluar requisitos de software</strong> (algoritmos).</li>
+                    <li>Competencias clave:
+                        <ul>
+                            <li><strong>Ciencias naturales</strong> (física aplicada al contexto productivo).</li>
+                            <li><strong>Inglés</strong> (nivel A2.2 y B1.1 según MCERL).</li>
+                        </ul>
+                    </li>
+                    <li>Resultados de aprendizaje:
+                        <ul>
+                            <li>Desarrollar procesos lógicos mediante algoritmos.</li>
+                            <li>Aplicar principios físicos en problemas productivos.</li>
+                            <li>Interactuar en inglés en contextos sociales y laborales.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- COMPETENCIA TÉCNICA: ALGORITMOS -->
+            <!-- ============================================================ -->
+            <section>
+                <h2>Competencia Técnica</h2>
+                <p><strong>Evaluar requisitos de la solución de software</strong> (220501093)</p>
+                <p>Actividades:</p>
+                <ul>
+                    <li>AA1 - Pensamiento algorítmico y lógica proposicional</li>
+                    <li>AA2 - Estructuras de control (secuencial, condicional, cíclica)</li>
+                    <li>AA3 - Arreglos y JavaScript</li>
+                </ul>
+                <p><small>Material de formación: <em>Programación y algoritmia básica</em></small></p>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA1 (Técnica) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA1 - Pensamiento Algorítmico</h2>
+                    <p><strong>GA3-220501093-AA1</strong></p>
+                    <ul>
+                        <li>Duración: 14 horas</li>
+                        <li>Objetivo: Desarrollar el pensamiento algorítmico mediante la lógica proposicional y representación de algoritmos.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Algoritmo:</strong> conjunto ordenado y finito de operaciones que resuelve un problema.</li>
+                        <li><strong>Pensamiento algorítmico:</strong> capacidad de descomponer problemas en pasos lógicos.</li>
+                        <li><strong>Lógica proposicional:</strong> proposiciones, conectores (AND, OR, NOT), tablas de verdad.</li>
+                        <li><strong>Análisis de problemas:</strong> identificar entradas, salidas y restricciones.</li>
+                        <li><strong>Representación:</strong> pseudocódigo y diagramas de flujo.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Lógica proposicional</h3>
+                    <p>Ejemplo de proposición compuesta:</p>
+                    <p style="background:#2d2d2d; padding:10px; border-radius:8px;">
+                        <code>(p ∧ q) → r</code>
+                    </p>
+                    <ul>
+                        <li><strong>p:</strong> "Las palomas vuelan"</li>
+                        <li><strong>q:</strong> "Todas las aves tienen plumas"</li>
+                        <li><strong>r:</strong> "Las palomas son aves"</li>
+                    </ul>
+                    <p>Tabla de verdad permite evaluar la validez del razonamiento.</p>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico</h3>
+                    <p><strong>Problema:</strong> Calcular el área de un triángulo rectángulo.</p>
+                    <ul>
+                        <li><strong>Entrada:</strong> base y altura (solicitadas al usuario).</li>
+                        <li><strong>Salida:</strong> área = (base × altura) / 2.</li>
+                    </ul>
+                    <pre><code data-trim>
+                        ALGORITMO areaTriangulo
+                        VAR
+                          REAL base, altura, area
+                        INICIO
+                          ESCRIBIR("Ingrese la base: ")
+                          LEER(base)
+                          ESCRIBIR("Ingrese la altura: ")
+                          LEER(altura)
+                          area ← base * altura / 2
+                          ESCRIBIR("El área es: ", area)
+                        FIN
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Evidencias de la AA1</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Cuestionario de bases conceptuales de lógica proposicional.</li>
+                        <li><strong>EV02:</strong> Taller de resolución de problemas en pseudocódigo y diagramas de flujo (incluye investigación sobre diagramas de flujo).</li>
+                    </ul>
+                    <p><small>Formatos: PDF, con referencias APA.</small></p>
+                </section>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA2 (Técnica) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA2 - Estructuras de Control</h2>
+                    <p><strong>GA3-220501093-AA2</strong></p>
+                    <ul>
+                        <li>Duración: 40 horas</li>
+                        <li>Objetivo: Desarrollar soluciones algorítmicas utilizando estructuras secuenciales, condicionales y repetitivas.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Estructura secuencial:</strong> instrucciones ejecutadas una tras otra.</li>
+                        <li><strong>Estructura condicional:</strong> <code>SI (condición) ENTONCES ... SINO ...</code></li>
+                        <li><strong>Estructuras repetitivas:</strong>
+                            <ul>
+                                <li><code>PARA (FOR)</code>: número fijo de iteraciones.</li>
+                                <li><code>MIENTRAS (WHILE)</code>: se repite mientras se cumpla una condición.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Contadores y acumuladores:</strong> variables que incrementan o suman valores en cada iteración.</li>
+                        <li><strong>Funciones y procedimientos:</strong> modularidad para reutilizar código.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Estructura repetitiva FOR</h3>
+                    <p>Ejemplo: sumar los primeros N números naturales.</p>
+                    <pre><code data-trim>
+                        ALGORITMO sumarNaturales
+                        VAR
+                          ENTERO N, suma, i
+                        INICIO
+                          ESCRIBIR("Ingrese N: ")
+                          LEER(N)
+                          suma ← 0
+                          PARA i DESDE 1 HASTA N
+                            suma ← suma + i
+                          FINPARA
+                          ESCRIBIR("La suma es: ", suma)
+                        FIN
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico: Factorial</h3>
+                    <p><strong>Problema:</strong> Calcular el factorial de un número dado (N!).</p>
+                    <ul>
+                        <li>Entrada: N (entero positivo).</li>
+                        <li>Salida: N! = 1 × 2 × ... × N.</li>
+                    </ul>
+                    <pre><code data-trim>
+                        ALGORITMO factorial
+                        VAR
+                          ENTERO N, fact, i
+                        INICIO
+                          ESCRIBIR("Ingrese N: ")
+                          LEER(N)
+                          fact ← 1
+                          i ← 1
+                          MIENTRAS i <= N
+                            fact ← fact * i
+                            i ← i + 1
+                          FINMIENTRAS
+                          ESCRIBIR("Factorial: ", fact)
+                        FIN
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Evidencias de la AA2</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Documento con análisis, diseño e implementación de algoritmos (edad y año bisiesto).</li>
+                        <li><strong>EV02:</strong> Foro temático sobre ventajas de diagramas de flujo vs pseudocódigo.</li>
+                        <li><strong>EV03:</strong> Taller de 10 problemas usando funciones y procedimientos (entregar en ZIP).</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA3 (Técnica) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA3 - Arreglos y JavaScript</h2>
+                    <p><strong>GA3-220501093-AA3</strong></p>
+                    <ul>
+                        <li>Duración: 42 horas</li>
+                        <li>Objetivo: Solucionar problemas utilizando vectores, matrices y el lenguaje JavaScript.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Arreglos (arrays):</strong> colecciones de datos del mismo tipo.
+                            <ul>
+                                <li><strong>Vectores:</strong> una dimensión (lista).</li>
+                                <li><strong>Matrices:</strong> dos o más dimensiones (tablas).</li>
+                            </ul>
+                        </li>
+                        <li><strong>JavaScript:</strong> lenguaje interpretado, sintaxis flexible.
+                            <ul>
+                                <li>Tipos de datos: Number, String, Boolean, etc.</li>
+                                <li>Operadores: aritméticos, relacionales, lógicos.</li>
+                                <li>Estructuras de control: <code>if...else</code>, <code>for</code>, <code>while</code>.</li>
+                                <li>Funciones propias y métodos de array (<code>push</code>, <code>sort</code>, <code>filter</code>).</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Ejemplo: vector en JavaScript</h3>
+                    <p>Almacenar 5 números y mostrar los mayores a 100.</p>
+                    <pre><code data-trim>
+                        let numeros = [];
+                        for (let i = 0; i < 5; i++) {
+                            let valor = parseInt(prompt("Ingrese un número:"));
+                            numeros.push(valor);
+                        }
+                        let mayores = numeros.filter(n => n > 100);
+                        console.log("Mayores a 100:", mayores);
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico: Matriz y registros</h3>
+                    <p>Matriz de 3×4 (productos y precios).</p>
+                    <pre><code data-trim>
+                        let datos = [
+                            ["Manzana", "Pera", "Papaya", "Piña"],
+                            ["Papa", "Tomate", "Yuca", "Ajo"],
+                            ["Arroz", "Frijol", "Cebada", "Garbanzo"]
+                        ];
+                        // Acceder a un elemento:
+                        console.log(datos[1][2]); // "Yuca"
+                    </code></pre>
+                    <p>Los registros se pueden modelar como objetos:</p>
+                    <pre><code data-trim>
+                        let persona = { nombre: "Juan", edad: 19, email: "juan@mail.com" };
+                    </code></pre>
+                </section>
+                <section>
+                    <h3>Evidencias de la AA3</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Documento teórico sobre lenguajes compilados/interpretados, características de JavaScript, tipos de datos y operadores.</li>
+                        <li><strong>EV02:</strong> Resolución de 4 problemas algorítmicos en JavaScript (área/perímetro, vectores, mezcla de vectores, encuesta con menú). Entregar en ZIP.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- COMPETENCIA CIENCIAS NATURALES -->
+            <!-- ============================================================ -->
+            <section>
+                <h2>Competencia Clave: Ciencias Naturales</h2>
+                <p><strong>Aplicación de conocimientos de las ciencias naturales</strong> (220201501)</p>
+                <p>Actividades:</p>
+                <ul>
+                    <li>AA1 - Reconocer principios y leyes físicas.</li>
+                    <li>AA2 - Interpretar cambios físicos de los cuerpos.</li>
+                    <li>AA3 - Describir manifestaciones de energía.</li>
+                    <li>AA4 - Realizar experimentos y argumentar fenómenos.</li>
+                </ul>
+                <p><small>Material de formación: <em>La ciencia de las cosas</em></small></p>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA1 (Física) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA1 - Principios y leyes físicas</h2>
+                    <p><strong>GA3-220201501-AA1</strong></p>
+                    <ul>
+                        <li>Duración: 12 horas</li>
+                        <li>Objetivo: Reconocer conceptos, principios y leyes fundamentales de la física aplicados al contexto productivo.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Leyes de Newton:</strong> inercia, fuerza-masa-aceleración, acción-reacción.</li>
+                        <li><strong>Principios de conservación:</strong> energía, momento lineal.</li>
+                        <li><strong>Medición y unidades:</strong> Sistema Internacional (SI).</li>
+                        <li><strong>Aplicaciones productivas:</strong> motores, sistemas hidráulicos, neumáticos, control de procesos.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Leyes de Newton en la industria</h3>
+                    <ul>
+                        <li><strong>Primera ley:</strong> un objeto en reposo permanece en reposo a menos que actúe una fuerza. Aplicación: máquinas que requieren fuerzas para moverse.</li>
+                        <li><strong>Segunda ley:</strong> F = m·a. Cálculo de fuerzas necesarias en brazos robóticos.</li>
+                        <li><strong>Tercera ley:</strong> acción-reacción. Uso en propulsores y sistemas de sujeción.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico</h3>
+                    <p><strong>Problema:</strong> Calcular la fuerza necesaria para acelerar un carro de 1000 kg a 2 m/s².</p>
+                    <p>Solución: F = m × a = 1000 × 2 = 2000 N.</p>
+                    <p>Este tipo de cálculos es común en diseño de vehículos y maquinaria.</p>
+                </section>
+                <section>
+                    <h3>Evidencia</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Cuestionario (60 minutos) sobre principios y leyes físicas.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA2 (Física) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA2 - Cambios físicos de los cuerpos</h2>
+                    <p><strong>GA3-220201501-AA2</strong></p>
+                    <ul>
+                        <li>Duración: 12 horas</li>
+                        <li>Objetivo: Interpretar y explicar cambios físicos mediante medidas, gráficas y ecuaciones.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Tipos de medidas:</strong> longitud, masa, tiempo, temperatura, etc.</li>
+                        <li><strong>Gráficas:</strong> representación de datos (posición-tiempo, velocidad-tiempo).</li>
+                        <li><strong>Ecuaciones de movimiento:</strong> MRU, MRUV.</li>
+                        <li><strong>Cambios de fase:</strong> sólido, líquido, gas, y su relación con temperatura y presión.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Gráficas y ecuaciones</h3>
+                    <p>Ejemplo: Movimiento rectilíneo uniforme (MRU).</p>
+                    <ul>
+                        <li>Ecuación: x = x₀ + v·t</li>
+                        <li>Gráfica de posición vs tiempo es una línea recta con pendiente v.</li>
+                    </ul>
+                    <p>Interpretación: permite predecir posiciones futuras y optimizar trayectorias en procesos productivos (transporte, logística).</p>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico</h3>
+                    <p><strong>Problema:</strong> Un carro se mueve a 20 m/s durante 5 s. ¿Qué distancia recorre?</p>
+                    <p>Solución: x = v·t = 20 × 5 = 100 m.</p>
+                    <p>Este cálculo es esencial en sistemas de control de velocidad y seguridad.</p>
+                </section>
+                <section>
+                    <h3>Evidencia</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Video expositivo (3-7 min) sobre un experimento que demuestre una ley de Newton, con aplicación productiva.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA3 (Física) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA3 - Manifestaciones de energía</h2>
+                    <p><strong>GA3-220201501-AA3</strong></p>
+                    <ul>
+                        <li>Duración: 12 horas</li>
+                        <li>Objetivo: Describir y explicar manifestaciones de energía en fenómenos físicos, considerando variables en contextos social y productivo.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Tipos de energía:</strong> cinética, potencial (gravitatoria, elástica), térmica, eléctrica, eólica, solar.</li>
+                        <li><strong>Conservación de la energía:</strong> la energía total de un sistema aislado permanece constante.</li>
+                        <li><strong>Transformaciones energéticas:</strong> de una forma a otra (ej. química → eléctrica → mecánica).</li>
+                        <li><strong>Parámetros físicos:</strong> masa, velocidad, altura, temperatura, etc.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Energía cinética y potencial</h3>
+                    <ul>
+                        <li><strong>Energía cinética:</strong> Ec = ½ m v²</li>
+                        <li><strong>Energía potencial gravitatoria:</strong> Ep = m g h</li>
+                        <li><strong>Conservación:</strong> Ec₁ + Ep₁ = Ec₂ + Ep₂ (sin rozamiento).</li>
+                    </ul>
+                    <p>Aplicaciones: diseño de montañas rusas, frenado regenerativo, almacenamiento de energía en presas.</p>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico</h3>
+                    <p><strong>Problema:</strong> Una masa de 2 kg cae desde 10 m de altura. Calcular su velocidad al llegar al suelo (despreciando rozamiento).</p>
+                    <p>Solución: Ep = mgh = 2×9.8×10 = 196 J. Ec = ½ m v² = 196 → v = √(2×196/2) = √196 = 14 m/s.</p>
+                </section>
+                <section>
+                    <h3>Evidencia</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Informe de laboratorio sobre conservación de la energía, incluyendo cálculos, gráficas, fotografías y conclusiones.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA4 (Física) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA4 - Experimentos y argumentación</h2>
+                    <p><strong>GA3-220201501-AA4</strong></p>
+                    <ul>
+                        <li>Duración: 12 horas</li>
+                        <li>Objetivo: Realizar experimentos para interpretar y argumentar fenómenos físicos, relacionándolos con el contexto productivo.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Método experimental:</strong> planteamiento, observación, medición, análisis, conclusiones.</li>
+                        <li><strong>Termodinámica:</strong> leyes de la termodinámica, calor, trabajo.</li>
+                        <li><strong>Electromagnetismo:</strong> campos eléctricos y magnéticos, aplicaciones.</li>
+                        <li><strong>Oscilaciones y ondas:</strong> movimiento armónico, ondas mecánicas y electromagnéticas.</li>
+                        <li><strong>Interpretación de planos y gráficas:</strong> lectura y análisis de datos.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>10 avances tecnológicos</h3>
+                    <p>Relacionados con los temas: motores eléctricos, generadores, paneles solares, baterías, sistemas de refrigeración, resonancia magnética, GPS, fibra óptica, microondas, sensores.</p>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico de experimento</h3>
+                    <p><strong>Experimento:</strong> Medir la eficiencia de un panel solar.</p>
+                    <ul>
+                        <li>Materiales: panel solar, voltímetro, amperímetro, lámpara.</li>
+                        <li>Procedimiento: variar la distancia de la lámpara y medir potencia generada.</li>
+                        <li>Registro: tabla de datos, gráfica de potencia vs distancia.</li>
+                        <li>Conclusión: relación entre intensidad lumínica y generación eléctrica.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Evidencias</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Video expositivo (3-7 min) sobre un experimento de conservación de energía, termodinámica, electromagnetismo, etc., y su relación con avances tecnológicos.</li>
+                        <li><strong>EV02:</strong> Bitácora (máx. 30 páginas) que incluya definición personal de física, URLs de los videos, informe de laboratorio, registro fotográfico, infografía del componente formativo y conclusiones.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- COMPETENCIA INGLÉS -->
+            <!-- ============================================================ -->
+            <section>
+                <h2>Competencia Clave: Inglés</h2>
+                <p><strong>Interactuar en lengua inglesa</strong> (240202501)</p>
+                <p>Actividades:</p>
+                <ul>
+                    <li>AA1 - Dialogar sobre soluciones a problemas en contextos sociales.</li>
+                    <li>AA2 - Reportar soluciones a problemas en contextos laborales.</li>
+                </ul>
+                <p><small>Niveles MCER: A2.2 y B1.1</small></p>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA1 (Inglés) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA1 - Diálogos en contextos sociales</h2>
+                    <p><strong>GA3-240202501-AA1</strong></p>
+                    <ul>
+                        <li>Duración: 48 horas</li>
+                        <li>Objetivo: Dialogar sobre posibles soluciones a problemas en contextos sociales, usando expresiones de obligación y consejo.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Vocabulario:</strong> problemas sociales, medio ambiente, trabajo en equipo.</li>
+                        <li><strong>Gramática:</strong> <em>have to, must, should</em> para expresar obligación y recomendación.</li>
+                        <li><strong>Pronunciación y fluidez:</strong> entonación en preguntas y sugerencias.</li>
+                        <li><strong>Actos comunicativos:</strong> dar opiniones, hacer sugerencias, pedir y ofrecer ayuda.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Uso de <em>have to / must / should</em></h3>
+                    <ul>
+                        <li><strong>Have to:</strong> obligación externa (ej. "You have to wear a uniform.")</li>
+                        <li><strong>Must:</strong> obligación personal o regla (ej. "You must turn off your phone.")</li>
+                        <li><strong>Should:</strong> recomendación (ej. "You should recycle.")</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico</h3>
+                    <p><strong>Diálogo:</strong> Dos compañeros discuten cómo reducir el uso de plástico en la oficina.</p>
+                    <ul>
+                        <li><em>A: "We should use reusable bottles."</em></li>
+                        <li><em>B: "I agree. We must also separate waste."</em></li>
+                        <li><em>A: "We have to inform the staff about recycling points."</em></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Evidencias</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Cuestionario (15 preguntas, 30 min) sobre el nivel 4 (A2.2).</li>
+                        <li><strong>EV02:</strong> Audio (2-5 min) en el que el aprendiz se presenta y habla sobre sus actitudes y obligaciones en el contexto laboral/académico, usando <em>have to / must / should</em>. Subir a Spreaker/Podbean y compartir URL.</li>
+                        <li><strong>EV03:</strong> Foro "Giving opinions about jobs" donde se responden preguntas sobre cómo ser ecológico en el trabajo y se comentan las participaciones de los compañeros.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ------------------------------------------------------------ -->
+            <!-- ACTIVIDAD AA2 (Inglés) -->
+            <!-- ------------------------------------------------------------ -->
+            <section>
+                <section>
+                    <h2>AA2 - Reporte en contextos laborales</h2>
+                    <p><strong>GA3-240202501-AA2</strong></p>
+                    <ul>
+                        <li>Duración: 48 horas</li>
+                        <li>Objetivo: Reportar soluciones a problemas en contextos laborales, utilizando condicionales y expresando flexibilidad, adaptabilidad y liderazgo.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Conceptos clave</h3>
+                    <ul>
+                        <li><strong>Condicionales:</strong> zero, first, second conditional para hablar de situaciones reales, posibles y poco probables.</li>
+                        <li><strong>Vocabulario de liderazgo y responsabilidad:</strong> <em>flexibility, adaptability, decision-making, accountability</em>.</li>
+                        <li><strong>Expresar planes y acciones:</strong> uso de <em>will, going to, present continuous</em> para futuro.</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Condicionales en contexto laboral</h3>
+                    <ul>
+                        <li><strong>Zero conditional:</strong> hechos generales (ej. "If you work hard, you succeed.")</li>
+                        <li><strong>First conditional:</strong> situaciones reales futuras (ej. "If we reduce costs, we will increase profits.")</li>
+                        <li><strong>Second conditional:</strong> situaciones hipotéticas (ej. "If I were the manager, I would implement flexible hours.")</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Ejemplo práctico</h3>
+                    <p><strong>Experiencia de adaptabilidad:</strong></p>
+                    <p><em>"Last year, our team had to work remotely. If we hadn't adapted quickly, we would have lost clients. We used new tools and held virtual meetings. This experience taught me the importance of flexibility."</em></p>
+                    <p>Este tipo de narración utiliza condicionales y pasado para explicar soluciones.</p>
+                </section>
+                <section>
+                    <h3>Evidencias</h3>
+                    <ul>
+                        <li><strong>EV01:</strong> Cuestionario (15 preguntas, 30 min) sobre el nivel 5 (B1.1).</li>
+                        <li><strong>EV02:</strong> Audio (2-5 min) donde el aprendiz habla sobre su trayectoria, planes y soluciones en contextos académicos y laborales, usando condicionales y vocabulario de liderazgo. Compartir URL.</li>
+                        <li><strong>EV03:</strong> Foro "Sharing life experiences" donde se comparte una experiencia de adaptabilidad en el trabajo y se responden preguntas sobre resultados y aprendizajes.</li>
+                    </ul>
+                </section>
+            </section>
+
+            <!-- ============================================================ -->
+            <!-- CIERRE -->
+            <!-- ============================================================ -->
+            <section>
+                <h2>¡Gracias!</h2>
+                <p>Recuerda revisar los materiales de formación, organizar tu tiempo y participar activamente en los foros.</p>
+                <p><small>Éxitos en tu proceso de aprendizaje.</small></p>
+            </section>
+
+        </div> <!-- .slides -->
+    </div> <!-- .reveal -->
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>
