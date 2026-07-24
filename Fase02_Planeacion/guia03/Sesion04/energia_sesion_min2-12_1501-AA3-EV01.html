@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tipos de Energía y Experimentos</title>
+
+<style>
+  :root{
+    --base03:#002b36; --base02:#073642; --base01:#586e75; --base00:#657b83;
+    --base0:#839496; --base1:#93a1a1; --base2:#eee8d5; --base3:#fdf6e3;
+    --blue:#268bd2; --cyan:#2aa198; --green:#859900; --orange:#cb4b16;
+    --yellow:#b58900; --violet:#6c71c4; --red:#dc322f; --magenta:#d33682;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; }
+  body{
+    font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--base03); color: var(--base01);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+
+  .deck{
+    width:min(96vw, 1140px); height:min(94vh, 700px);
+    background: var(--base3); border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    position:relative; overflow:hidden;
+  }
+
+  .slide{
+    position:absolute; inset:0; padding:2.6em 3.4em 2.4em 3.4em;
+    opacity:0; visibility:hidden; transform: translateX(40px);
+    transition: opacity .45s ease, transform .45s ease;
+    overflow-y:auto;
+  }
+  .slide.active{ opacity:1; visibility:visible; transform:translateX(0); }
+
+  h1{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-weight:800; letter-spacing:-0.5px;
+    color: var(--base02); font-size:1.75em; margin:0 0 0.15em 0;
+    border-bottom:4px solid var(--accent, var(--blue)); display:inline-block; padding-bottom:0.1em;
+  }
+  h3{ font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.85em; margin:0 0 0.4em 0; color:var(--accent, var(--blue)); }
+  p, li{ font-size:0.8em; line-height:1.35; }
+
+  .eyebrow{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.55em; letter-spacing:3px;
+    text-transform:uppercase; color: var(--accent, var(--cyan)); display:block; margin-bottom:0.25em;
+  }
+  .timebadge{
+    display:inline-block; font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.5em;
+    letter-spacing:2px; color: var(--base3); background: var(--accent, var(--blue));
+    padding:0.25em 0.6em; border-radius:3px; margin-bottom:0.5em;
+  }
+
+  .panel{
+    background: var(--base2); border:1px solid var(--base1);
+    border-left:5px solid var(--accent, var(--blue));
+    border-radius:6px; padding:0.8em 1em; margin-bottom:0.6em;
+  }
+  .panel ul{ margin:0; padding-left:1.1em; }
+  .panel li{ margin-bottom:0.22em; }
+
+  /* ---- tabla energía ---- */
+  table.energy{
+    width:100%; border-collapse:collapse; background:var(--base3);
+    border-radius:8px; overflow:hidden; font-size:0.82em;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  table.energy thead th{
+    background: var(--accent, var(--yellow)); color: var(--base3);
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.85em;
+    letter-spacing:1px; text-transform:uppercase; padding:0.55em 0.8em; text-align:left;
+  }
+  table.energy tbody td{
+    padding:0.5em 0.8em; border-bottom:1px solid var(--base2);
+  }
+  table.energy tbody tr:nth-child(even){ background: var(--base2); }
+  table.energy tbody tr{ transition: background .15s ease; }
+  table.energy tbody tr:hover{ background: #fbeecb; }
+
+  .idea-row{ display:flex; gap:0.7em; margin-top:0.8em; flex-wrap:wrap; }
+  .idea-chip{
+    flex:1; min-width:150px; background: var(--base02); color: var(--base3);
+    border-radius:8px; padding:0.6em 0.8em; font-size:0.72em;
+    font-family:'Consolas','Menlo','Monaco',monospace;
+  }
+  .idea-chip b{ color: var(--yellow); display:block; margin-bottom:0.2em; font-size:1.05em; }
+
+  /* ---- experimentos (tabs) ---- */
+  .exp-tabs{ display:flex; gap:0.6em; flex-wrap:wrap; margin-bottom:0.8em; }
+  .exp-tab{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.62em; letter-spacing:0.5px;
+    background: var(--base2); border:1.5px solid var(--base1); color:var(--base01);
+    padding:0.5em 0.8em; border-radius:20px; cursor:pointer; transition:.15s; white-space:nowrap;
+  }
+  .exp-tab:hover{ border-color: var(--accent, var(--violet)); }
+  .exp-tab.active{ background: var(--accent, var(--violet)); color:var(--base3); border-color:var(--accent, var(--violet)); }
+
+  .exp-detail{ display:grid; grid-template-columns: 1fr 1fr; gap:1.6em; align-items:start; }
+  .exp-detail .lab{
+    background: var(--base3); border:2px dashed var(--accent, var(--violet));
+    border-radius:10px; padding:0.8em; min-height:220px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;
+  }
+  .lab-label{
+    position:absolute; top:0.5em; left:0.7em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.52em; letter-spacing:2px; text-transform:uppercase; color: var(--accent, var(--violet)); opacity:0.85;
+  }
+  .btn{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.6em; letter-spacing:1px;
+    background: var(--accent, var(--violet)); color: var(--base3); border:none;
+    padding:0.55em 1em; border-radius:5px; cursor:pointer; margin-top:0.7em;
+    box-shadow:0 3px 0 rgba(0,0,0,0.18); transition: transform .08s ease;
+  }
+  .btn:active{ transform: translateY(2px); box-shadow:0 1px 0 rgba(0,0,0,0.18); }
+  .slider-row{ display:flex; align-items:center; gap:0.6em; margin:0.4em 0; font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.58em; width:100%; max-width:280px; }
+  .slider-row input[type=range]{ flex:1; accent-color: var(--accent, var(--violet)); }
+  .slider-row .val{ width:2.4em; text-align:right; color:var(--accent, var(--violet)); font-weight:700; }
+
+  /* ---- registro de datos ---- */
+  table.reg{
+    width:100%; border-collapse:collapse; background:var(--base3); font-size:0.72em;
+    border-radius:6px; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,0.06);
+  }
+  table.reg thead th{
+    background: var(--accent, var(--cyan)); color:var(--base3); padding:0.4em 0.5em;
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.85em; text-align:left;
+  }
+  table.reg tbody td{ padding:0.35em 0.5em; border-bottom:1px solid var(--base2); }
+  table.reg tbody tr:nth-child(even){ background: var(--base2); }
+  table.reg input{
+    width:100%; border:1px solid var(--base1); border-radius:4px; padding:0.25em 0.4em;
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.95em; background:var(--base3); color:var(--base02);
+  }
+
+  .chart-box{
+    background: var(--base3); border:2px dashed var(--accent, var(--cyan)); border-radius:10px;
+    padding:0.7em; position:relative; margin-top:0.6em;
+  }
+  .chart-box .lab-label{ color: var(--accent, var(--cyan)); }
+
+  .note-box{
+    margin-top:0.6em; background: var(--base02); color: var(--base2);
+    border-radius:6px; padding:0.6em 0.9em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.6em; display:flex; align-items:center; gap:0.6em;
+  }
+  .note-box .n-mark{ font-size:1.3em; color: var(--accent, var(--cyan)); }
+
+  .slide-index{
+    position:absolute; bottom:0.6em; right:1.1em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.55em; color: var(--base1); letter-spacing:2px;
+  }
+
+  .nav{
+    position:absolute; bottom:0; left:0; right:0; height:44px;
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.05), transparent); z-index:6;
+  }
+  .navbtn{
+    width:32px; height:32px; border-radius:50%; border:1.5px solid var(--base01);
+    background: var(--base3); color: var(--base01); font-size:15px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:.15s;
+  }
+  .navbtn:hover{ background: var(--blue); color:var(--base3); border-color:var(--blue); }
+  .navbtn:disabled{ opacity:0.3; cursor:default; background:var(--base3); color:var(--base01); border-color:var(--base01); }
+  .dots{ display:flex; gap:8px; }
+  .dot-nav{ width:9px; height:9px; border-radius:50%; background: var(--base1); cursor:pointer; transition:.15s; }
+  .dot-nav.active{ background: var(--blue); width:22px; border-radius:5px; }
+  .progress{ position:absolute; top:0; left:0; height:4px; background: var(--blue); transition: width .4s ease; z-index:5; }
+  .hint{
+    position:absolute; top:0.9em; right:1.2em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.5em; color: var(--base1); letter-spacing:1px; z-index:6;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+  <div class="progress" id="progressBar"></div>
+  <div class="hint">← → para navegar</div>
+
+  <!-- ===================== SLIDE 1 · Minuto 2-5 ===================== -->
+  <section class="slide active" data-index="0" style="--accent: var(--yellow);">
+    <span class="eyebrow">Minuto 2 – 5</span>
+    <span class="timebadge">2:00 – 5:00</span>
+    <h1>¿Qué tipos de energía pueden estudiar?</h1>
+
+    <table class="energy" style="margin-top:0.7em;">
+      <thead>
+        <tr><th>Tipo de energía</th><th>Ejemplo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Potencial gravitacional</td><td>📕 Libro sobre una mesa</td></tr>
+        <tr><td>Cinética</td><td>🚴 Bicicleta en movimiento</td></tr>
+        <tr><td>Elástica</td><td>🎯 Resorte o caucho estirado</td></tr>
+        <tr><td>Térmica</td><td>♨️ Agua caliente</td></tr>
+        <tr><td>Eléctrica</td><td>🔌 Celular cargando</td></tr>
+        <tr><td>Solar</td><td>☀️ Panel solar</td></tr>
+        <tr><td>Eólica</td><td>🌬️ Molino de viento</td></tr>
+      </tbody>
+    </table>
+
+    <div class="idea-row">
+      <div class="idea-chip"><b>Potencial</b>energía almacenada</div>
+      <div class="idea-chip"><b>Cinética</b>energía por movimiento</div>
+      <div class="idea-chip"><b>Térmica</b>energía asociada al calor</div>
+      <div class="idea-chip"><b>Elástica</b>energía almacenada por deformación</div>
+    </div>
+    <div class="slide-index">MINUTO 2–5 · TIPOS DE ENERGÍA</div>
+  </section>
+
+  <!-- ===================== SLIDE 2 · Minuto 5-9 ===================== -->
+  <section class="slide" data-index="1" style="--accent: var(--violet);">
+    <span class="eyebrow">Minuto 5 – 9</span>
+    <span class="timebadge">5:00 – 9:00</span>
+    <h1>Ideas de experimentos sencillos</h1>
+    <p style="margin:0.2em 0 0.7em 0;">No necesitan equipos de laboratorio: con objetos de la casa es suficiente. Elige una opción:</p>
+
+    <div class="exp-tabs" id="expTabs">
+      <div class="exp-tab active" data-exp="0">🏀 Pelota que cae</div>
+      <div class="exp-tab" data-exp="1">🛞 Carrito en rampa</div>
+      <div class="exp-tab" data-exp="2">🎯 Resorte o caucho</div>
+      <div class="exp-tab" data-exp="3">♨️ Agua caliente</div>
+      <div class="exp-tab" data-exp="4">🧵 Péndulo</div>
+    </div>
+
+    <div class="exp-detail">
+      <div>
+        <div class="panel" id="expMaterials">
+          <h3>Materiales</h3>
+          <ul id="expMaterialsList"></ul>
+        </div>
+        <div class="panel" id="expSteps">
+          <h3>Qué observar</h3>
+          <ul id="expStepsList"></ul>
+        </div>
+      </div>
+
+      <div class="lab" id="expLab">
+        <span class="lab-label" id="expLabLabel">Simulación</span>
+        <svg id="expSvg" viewBox="0 0 260 160" width="100%" style="max-width:300px;"></svg>
+        <div id="expControls"></div>
+        <button class="btn" id="expRunBtn">▶ Simular</button>
+      </div>
+    </div>
+    <div class="slide-index">MINUTO 5–9 · EXPERIMENTOS</div>
+  </section>
+
+  <!-- ===================== SLIDE 3 · Minuto 9-12 ===================== -->
+  <section class="slide" data-index="2" style="--accent: var(--cyan);">
+    <span class="eyebrow">Minuto 9 – 12</span>
+    <span class="timebadge">9:00 – 12:00</span>
+    <h1>¿Qué datos deben registrar?</h1>
+    <p style="margin:0.2em 0 0.6em 0;">Un laboratorio no es solo hacer el experimento: también es <b>registrar información</b>. Prueba a llenar estas tablas de ejemplo:</p>
+
+    <div class="exp-detail" style="grid-template-columns:1.05fr 0.95fr;">
+      <div>
+        <div class="panel">
+          <h3>Ejemplo · pelota que cae</h3>
+          <table class="reg">
+            <thead><tr><th>Prueba</th><th>Altura (m)</th><th>Tiempo (s)</th><th>Observaciones</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>0.5</td><td><input type="text" placeholder="..."></td><td><input type="text" placeholder="..."></td></tr>
+              <tr><td>2</td><td>1.0</td><td><input type="text" placeholder="..."></td><td><input type="text" placeholder="..."></td></tr>
+              <tr><td>3</td><td>1.5</td><td><input type="text" placeholder="..."></td><td><input type="text" placeholder="..."></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="note-box">
+          <span class="n-mark">💡</span>
+          <span>Con estos datos ya podrán construir una gráfica sencilla (altura vs. tiempo, o temperatura vs. tiempo).</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel">
+          <h3>Ejemplo · agua caliente</h3>
+          <table class="reg" id="waterTable">
+            <thead><tr><th>Tiempo</th><th>Temperatura (°C)</th></tr></thead>
+            <tbody>
+              <tr><td>0 min</td><td><input type="number" class="tempInput" data-t="0" placeholder="..." min="0" max="100"></td></tr>
+              <tr><td>5 min</td><td><input type="number" class="tempInput" data-t="1" placeholder="..." min="0" max="100"></td></tr>
+              <tr><td>10 min</td><td><input type="number" class="tempInput" data-t="2" placeholder="..." min="0" max="100"></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="chart-box">
+          <span class="lab-label">Gráfica en vivo · temperatura vs. tiempo</span>
+          <svg id="tempChart" viewBox="0 0 260 150" width="100%" style="max-width:300px; margin-top:1.4em;"></svg>
+        </div>
+      </div>
+    </div>
+    <div class="slide-index">MINUTO 9–12 · REGISTRO DE DATOS</div>
+  </section>
+
+  <div class="nav">
+    <button class="navbtn" id="prevBtn">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="navbtn" id="nextBtn">›</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var current = 0;
+
+  var dotsWrap = document.getElementById('dots');
+  slides.forEach(function(_, i){
+    var d = document.createElement('div');
+    d.className = 'dot-nav' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(d);
+  });
+  var dotEls = Array.prototype.slice.call(dotsWrap.children);
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var progressBar = document.getElementById('progressBar');
+
+  function render(){
+    slides.forEach(function(s, i){ s.classList.toggle('active', i === current); });
+    dotEls.forEach(function(d, i){ d.classList.toggle('active', i === current); });
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    progressBar.style.width = ((current + 1) / total * 100) + '%';
+  }
+  function goTo(i){
+    if (i < 0 || i >= total || i === current) return;
+    current = i; render();
+  }
+  prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+  nextBtn.addEventListener('click', function(){ goTo(current + 1); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+    else if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+
+  // ================= SLIDE 2: experimentos =================
+  var experiments = [
+    {
+      materials: ['Pelota', 'Regla', 'Celular (cronómetro)'],
+      steps: ['Se deja caer desde diferentes alturas.', 'Se observa cómo la energía potencial se transforma en energía cinética.'],
+      controlsHTML: '<div class="slider-row"><span>Altura (m)</span><input type="range" id="ballHeight" min="1" max="5" value="3"><span class="val" id="ballHeightVal">3</span></div>',
+      floorY: 129,
+      ballStartY: function(h){
+        // a mayor altura, el punto de partida está más arriba (y menor)
+        return this.floorY - (h * 20 + 8);
+      },
+      buildSvg: function(svg){
+        svg.innerHTML =
+          '<line x1="20" y1="140" x2="240" y2="140" stroke="var(--base01)" stroke-width="3"/>' +
+          '<line id="heightLine" x1="60" y1="63" x2="60" y2="140" stroke="var(--base1)" stroke-width="1" stroke-dasharray="3 3"/>' +
+          '<circle id="ballEl" cx="60" cy="63" r="11" fill="var(--yellow)" stroke="var(--base02)" stroke-width="1.5"/>';
+        this.updatePreview(svg);
+      },
+      updatePreview: function(svg){
+        var h = parseFloat(document.getElementById('ballHeight').value);
+        var y = this.ballStartY(h);
+        var ball = svg.querySelector('#ballEl');
+        var line = svg.querySelector('#heightLine');
+        if (!ball) return;
+        ball.style.transition = 'none';
+        ball.setAttribute('cy', y);
+        line.setAttribute('y1', y);
+      },
+      run: function(svg){
+        var h = parseFloat(document.getElementById('ballHeight').value);
+        var ball = svg.querySelector('#ballEl');
+        var startY = this.ballStartY(h);
+        var floorY = this.floorY;
+        ball.style.transition = 'none';
+        ball.setAttribute('cy', startY);
+        ball.getBoundingClientRect();
+        var dur = 0.35 + h * 0.18;
+        ball.style.transition = 'cy ' + dur + 's cubic-bezier(.5,0,.85,1)';
+        requestAnimationFrame(function(){ ball.setAttribute('cy', floorY); });
+      },
+      onSliderChange: function(){
+        document.getElementById('ballHeightVal').textContent = document.getElementById('ballHeight').value;
+        this.updatePreview(document.getElementById('expSvg'));
+      }
+    },
+    {
+      materials: ['Carrito de juguete', 'Tabla o libro grueso (rampa)', 'Libros para elevar la rampa'],
+      steps: ['Cambiar la altura de la rampa.', 'Observar cómo cambia la velocidad del carrito.'],
+      controlsHTML: '<div class="slider-row"><span>Altura rampa</span><input type="range" id="rampHeight" min="1" max="5" value="3"><span class="val" id="rampHeightVal">3</span></div>',
+      buildSvg: function(svg){
+        svg.innerHTML =
+          '<line x1="20" y1="135" x2="240" y2="135" stroke="var(--base01)" stroke-width="2"/>' +
+          '<polygon id="rampEl" points="30,135 30,80 220,135" fill="var(--base2)" stroke="var(--base01)" stroke-width="1.5"/>' +
+          '<g id="cartEl" transform="translate(38,66)"><rect width="26" height="16" rx="2" fill="var(--violet)"/><circle cx="5" cy="18" r="4" fill="var(--base02)"/><circle cx="21" cy="18" r="4" fill="var(--base02)"/></g>';
+      },
+      run: function(svg){
+        var h = parseFloat(document.getElementById('rampHeight').value);
+        var ramp = svg.querySelector('#rampEl');
+        var cart = svg.querySelector('#cartEl');
+        var topY = 135 - (h * 11 + 10);
+        ramp.setAttribute('points', '30,135 30,' + topY + ' 220,135');
+        cart.style.transition = 'none';
+        cart.setAttribute('transform', 'translate(38,' + (topY - 14) + ')');
+        cart.getBoundingClientRect();
+        var dur = Math.max(0.4, 1.5 - h * 0.18);
+        cart.style.transition = 'transform ' + dur + 's cubic-bezier(.3,.4,.4,1)';
+        requestAnimationFrame(function(){ cart.setAttribute('transform', 'translate(190,119)'); });
+      },
+      onSliderChange: function(){
+        document.getElementById('rampHeightVal').textContent = document.getElementById('rampHeight').value;
+      }
+    },
+    {
+      materials: ['Resorte o caucho', 'Regla'],
+      steps: ['Estirar diferentes distancias.', 'Observar cómo aumenta la energía almacenada.'],
+      controlsHTML: '<p style="font-size:0.62em; margin:0; color:var(--base00);">Cada clic alterna entre dos casos extremos.</p>',
+      renderState: function(svg, stretched){
+        var endX = stretched ? 104 : 50;
+        var zig = stretched
+          ? 'M32,80 L44,66 L56,94 L68,66 L80,94 L92,66 L104,80'
+          : 'M32,80 L38,74 L44,86 L50,80';
+        var barWidth = stretched ? 110 : 14;
+        var label = stretched
+          ? 'Estiramiento MÁXIMO → mucha energía almacenada'
+          : 'Estiramiento MÍNIMO → poca energía almacenada';
+        svg.innerHTML =
+          '<rect x="18" y="70" width="14" height="20" fill="var(--base01)"/>' +
+          '<path d="' + zig + '" stroke="var(--orange)" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>' +
+          '<circle cx="' + endX + '" cy="80" r="10" fill="var(--orange)"/>' +
+          '<rect x="18" y="118" width="110" height="10" rx="3" fill="var(--base2)" stroke="var(--base1)"/>' +
+          '<rect x="18" y="118" width="' + barWidth + '" height="10" rx="3" fill="var(--red)"/>' +
+          '<text x="18" y="145" font-family="Consolas,monospace" font-size="9.5" fill="var(--base02)">' + label + '</text>';
+      },
+      buildSvg: function(svg){
+        this._stretched = false;
+        this.renderState(svg, false);
+      },
+      run: function(svg){
+        this._stretched = !this._stretched;
+        this.renderState(svg, this._stretched);
+      },
+      onSliderChange: function(){}
+    },
+    {
+      materials: ['Agua caliente', 'Recipiente', 'Termómetro (o app del celular)'],
+      steps: ['Medir la temperatura inicial.', 'Esperar algunos minutos.', 'Registrar cómo disminuye.', 'Explicar la transferencia de energía térmica.'],
+      controlsHTML: '',
+      buildSvg: function(svg){
+        svg.innerHTML =
+          '<rect x="90" y="30" width="26" height="90" rx="6" fill="var(--base2)" stroke="var(--base01)" stroke-width="1.5"/>' +
+          '<rect id="mercuryEl" x="97" y="40" width="12" height="70" rx="4" fill="var(--red)"/>' +
+          '<circle cx="103" cy="118" r="10" fill="var(--red)"/>' +
+          '<g id="steamEl" opacity="0.9">' +
+            '<path d="M75 45 Q70 35 75 25" stroke="var(--base1)" stroke-width="2" fill="none"/>' +
+            '<path d="M130 45 Q135 35 130 25" stroke="var(--base1)" stroke-width="2" fill="none"/>' +
+          '</g>';
+      },
+      run: function(svg){
+        var mercury = svg.querySelector('#mercuryEl');
+        var steam = svg.querySelector('#steamEl');
+        mercury.style.transition = 'none';
+        mercury.setAttribute('y', 40); mercury.setAttribute('height', 70);
+        steam.style.opacity = 0.9;
+        mercury.getBoundingClientRect();
+        mercury.style.transition = 'y 1.4s ease, height 1.4s ease';
+        requestAnimationFrame(function(){
+          mercury.setAttribute('y', 75); mercury.setAttribute('height', 35);
+        });
+        steam.style.transition = 'opacity 1.4s ease';
+        setTimeout(function(){ steam.style.opacity = 0.1; }, 50);
+      },
+      onSliderChange: function(){}
+    },
+    {
+      materials: ['Cuerda o hilo', 'Tuerca o piedra pequeña (peso)'],
+      steps: ['Soltar el péndulo desde un extremo.', 'Observar cómo pasa de energía potencial a energía cinética y viceversa.', 'Cada clic muestra el extremo opuesto.'],
+      controlsHTML: '<p style="font-size:0.62em; margin:0; color:var(--base00);">Cada clic lleva el péndulo al extremo contrario.</p>',
+      buildSvg: function(svg){
+        svg.innerHTML =
+          '<circle cx="130" cy="15" r="4" fill="var(--base02)"/>' +
+          '<g id="pendulumEl" style="transform-origin:130px 15px; transform:rotate(-38deg); transition:transform 1s cubic-bezier(.4,0,.35,1);">' +
+            '<line x1="130" y1="15" x2="130" y2="112" stroke="var(--base01)" stroke-width="2"/>' +
+            '<circle cx="130" cy="112" r="12" fill="var(--cyan)"/>' +
+          '</g>';
+        this._side = -1;
+      },
+      run: function(svg){
+        var pend = svg.querySelector('#pendulumEl');
+        this._side = -this._side;
+        pend.style.transform = 'rotate(' + (this._side * 38) + 'deg)';
+      },
+      onSliderChange: function(){}
+    }
+  ];
+
+  var expTabs = document.querySelectorAll('.exp-tab');
+  var expSvg = document.getElementById('expSvg');
+  var expControls = document.getElementById('expControls');
+  var expRunBtn = document.getElementById('expRunBtn');
+  var expMaterialsList = document.getElementById('expMaterialsList');
+  var expStepsList = document.getElementById('expStepsList');
+  var currentExp = 0;
+
+  function loadExperiment(idx){
+    currentExp = idx;
+    var e = experiments[idx];
+    expMaterialsList.innerHTML = e.materials.map(function(m){ return '<li>' + m + '</li>'; }).join('');
+    expStepsList.innerHTML = e.steps.map(function(s){ return '<li>' + s + '</li>'; }).join('');
+    expControls.innerHTML = e.controlsHTML;
+    e.buildSvg(expSvg);
+    var slider = expControls.querySelector('input[type=range]');
+    if (slider){ slider.addEventListener('input', function(){ e.onSliderChange(); }); }
+  }
+
+  expTabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      expTabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      loadExperiment(parseInt(tab.getAttribute('data-exp'), 10));
+    });
+  });
+  expRunBtn.addEventListener('click', function(){ experiments[currentExp].run(expSvg); });
+  loadExperiment(0);
+
+  // ================= SLIDE 3: gráfica en vivo =================
+  var tempInputs = document.querySelectorAll('.tempInput');
+  var tempChart = document.getElementById('tempChart');
+
+  function drawChart(){
+    var vals = [null, null, null];
+    tempInputs.forEach(function(inp){
+      var idx = parseInt(inp.getAttribute('data-t'), 10);
+      var v = parseFloat(inp.value);
+      vals[idx] = isNaN(v) ? null : Math.max(0, Math.min(100, v));
+    });
+
+    var padL = 34, padR = 14, padT = 14, padB = 26;
+    var w = 260, h = 150;
+    var plotW = w - padL - padR, plotH = h - padT - padB;
+    var xs = [padL, padL + plotW / 2, padL + plotW];
+
+    var axes =
+      '<line x1="' + padL + '" y1="' + padT + '" x2="' + padL + '" y2="' + (padT + plotH) + '" stroke="var(--base01)" stroke-width="1.5"/>' +
+      '<line x1="' + padL + '" y1="' + (padT + plotH) + '" x2="' + (padL + plotW) + '" y2="' + (padT + plotH) + '" stroke="var(--base01)" stroke-width="1.5"/>' +
+      '<text x="' + (padL - 8) + '" y="' + padT + '" font-family="Consolas,monospace" font-size="8" fill="var(--base01)" text-anchor="end">100°</text>' +
+      '<text x="' + (padL - 8) + '" y="' + (padT + plotH) + '" font-family="Consolas,monospace" font-size="8" fill="var(--base01)" text-anchor="end">0°</text>' +
+      '<text x="' + xs[0] + '" y="' + (h - 8) + '" font-family="Consolas,monospace" font-size="8" fill="var(--base01)" text-anchor="middle">0m</text>' +
+      '<text x="' + xs[1] + '" y="' + (h - 8) + '" font-family="Consolas,monospace" font-size="8" fill="var(--base01)" text-anchor="middle">5m</text>' +
+      '<text x="' + xs[2] + '" y="' + (h - 8) + '" font-family="Consolas,monospace" font-size="8" fill="var(--base01)" text-anchor="middle">10m</text>';
+
+    var points = [];
+    var circles = '';
+    xs.forEach(function(x, i){
+      if (vals[i] !== null){
+        var y = padT + plotH - (vals[i] / 100) * plotH;
+        points.push(x + ',' + y);
+        circles += '<circle cx="' + x + '" cy="' + y + '" r="3.5" fill="var(--cyan)"/>';
+      }
+    });
+
+    var line = points.length > 1
+      ? '<polyline points="' + points.join(' ') + '" fill="none" stroke="var(--cyan)" stroke-width="2.5"/>'
+      : '';
+
+    tempChart.innerHTML = axes + line + circles;
+  }
+
+  tempInputs.forEach(function(inp){ inp.addEventListener('input', drawChart); });
+  drawChart();
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinco Temas y Avances Tecnológicos</title>
+
+<style>
+  :root{
+    --base03:#002b36; --base02:#073642; --base01:#586e75; --base00:#657b83;
+    --base0:#839496; --base1:#93a1a1; --base2:#eee8d5; --base3:#fdf6e3;
+    --blue:#268bd2; --cyan:#2aa198; --green:#859900; --orange:#cb4b16;
+    --yellow:#b58900; --violet:#6c71c4; --red:#dc322f; --magenta:#d33682;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; }
+  body{
+    font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--base03); color: var(--base01);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+
+  .deck{
+    width:min(96vw, 1160px); height:min(94vh, 700px);
+    background: var(--base3); border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    position:relative; overflow:hidden;
+  }
+
+  .slide{
+    position:absolute; inset:0; padding:2.8em 3.6em 2.6em 3.6em;
+    opacity:0; visibility:hidden; transform: translateX(40px);
+    transition: opacity .45s ease, transform .45s ease;
+    overflow-y:auto;
+  }
+  .slide.active{ opacity:1; visibility:visible; transform:translateX(0); }
+
+  h1{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-weight:800; letter-spacing:-0.5px;
+    color: var(--base02); font-size:1.85em; margin:0 0 0.15em 0;
+    border-bottom:4px solid var(--accent, var(--blue)); display:inline-block; padding-bottom:0.1em;
+  }
+  .eyebrow{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.55em; letter-spacing:3px;
+    text-transform:uppercase; color: var(--accent, var(--cyan)); display:block; margin-bottom:0.25em;
+  }
+  p{ font-size:0.85em; line-height:1.4; }
+
+  /* ---- tabla ---- */
+  table.data{
+    width:100%; border-collapse:collapse; background:var(--base3);
+    border-radius:8px; overflow:hidden; font-size:0.78em; margin-top:0.9em;
+    box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  }
+  table.data thead th{
+    background: var(--accent, var(--blue)); color: var(--base3);
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.82em;
+    letter-spacing:0.5px; text-transform:uppercase; padding:0.6em 0.9em; text-align:left;
+  }
+  table.data tbody td{
+    padding:0.55em 0.9em; border-bottom:1px solid var(--base2); vertical-align:top;
+  }
+  table.data tbody tr:nth-child(even){ background: var(--base2); }
+  table.data tbody tr{ transition: background .15s ease; }
+  table.data tbody tr:hover{ background: #fbeecb; }
+  table.data td.tema{ font-weight:700; color: var(--base02); white-space:nowrap; }
+  table.data tbody tr.dim{ opacity:0.25; }
+  table.data tbody tr.hit{ background:#fdf1d0; }
+
+  .note-box{
+    margin-top:0.75em; background: var(--base02); color: var(--base2);
+    border-radius:6px; padding:0.65em 0.95em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.62em; display:flex; align-items:center; gap:0.6em;
+  }
+  .note-box .n-mark{ font-size:1.3em; color: var(--accent, var(--cyan)); }
+
+  .chip-row{ display:flex; gap:0.5em; flex-wrap:wrap; margin-top:0.9em; }
+  .chip{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.6em; letter-spacing:0.3px;
+    background: var(--base2); border:1.5px solid var(--base1); color:var(--base01);
+    padding:0.4em 0.75em; border-radius:20px; cursor:pointer; transition:.15s; white-space:nowrap;
+  }
+  .chip:hover{ border-color: var(--accent, var(--violet)); }
+  .chip.active{ background: var(--accent, var(--violet)); color:var(--base3); border-color:var(--accent, var(--violet)); }
+
+  .task-callout{
+    margin-top:0.8em; background: var(--base2); border-left:5px solid var(--accent, var(--violet));
+    border-radius:6px; padding:0.7em 1em; font-size:0.78em;
+  }
+  .task-callout b{ color: var(--accent, var(--violet)); }
+
+  .slide-index{
+    position:absolute; bottom:0.6em; right:1.1em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.55em; color: var(--base1); letter-spacing:2px;
+  }
+
+  .nav{
+    position:absolute; bottom:0; left:0; right:0; height:44px;
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.05), transparent); z-index:6;
+  }
+  .navbtn{
+    width:32px; height:32px; border-radius:50%; border:1.5px solid var(--base01);
+    background: var(--base3); color: var(--base01); font-size:15px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:.15s;
+  }
+  .navbtn:hover{ background: var(--blue); color:var(--base3); border-color:var(--blue); }
+  .navbtn:disabled{ opacity:0.3; cursor:default; background:var(--base3); color:var(--base01); border-color:var(--base01); }
+  .dots{ display:flex; gap:8px; }
+  .dot-nav{ width:9px; height:9px; border-radius:50%; background: var(--base1); cursor:pointer; transition:.15s; }
+  .dot-nav.active{ background: var(--blue); width:22px; border-radius:5px; }
+  .progress{ position:absolute; top:0; left:0; height:4px; background: var(--blue); transition: width .4s ease; z-index:5; }
+  .hint{
+    position:absolute; top:0.9em; right:1.2em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.5em; color: var(--base1); letter-spacing:1px; z-index:6;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+  <div class="progress" id="progressBar"></div>
+  <div class="hint">← → para navegar</div>
+
+  <!-- Minuto 2 - 7 -->
+  <section class="slide active" data-index="0" style="--accent: var(--blue);">
+    <span class="eyebrow">Contenidos del curso</span>
+    <h1>Los cinco temas que deben explicar</h1>
+
+    <table class="data">
+      <thead>
+        <tr><th>Tema</th><th>¿Qué estudia?</th><th>Ejemplo cotidiano</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tema">Conservación de la energía</td>
+          <td>La energía se transforma, no desaparece.</td>
+          <td>Bicicleta, montaña rusa</td>
+        </tr>
+        <tr>
+          <td class="tema">Termodinámica</td>
+          <td>Relación entre calor y energía.</td>
+          <td>Nevera, aire acondicionado</td>
+        </tr>
+        <tr>
+          <td class="tema">Electromagnetismo</td>
+          <td>Electricidad y magnetismo.</td>
+          <td>Motor eléctrico, parlante</td>
+        </tr>
+        <tr>
+          <td class="tema">Oscilaciones y ondas</td>
+          <td>Movimiento repetitivo y propagación de energía.</td>
+          <td>Sonido, WiFi, radio</td>
+        </tr>
+        <tr>
+          <td class="tema">Interpretación de planos, datos y gráficas</td>
+          <td>Analizar información técnica.</td>
+          <td>Planos de una vivienda, gráficos de consumo eléctrico</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <span class="n-mark">💡</span>
+      <span>No necesitan profundizar en fórmulas: basta con explicar la idea principal y dar un ejemplo.</span>
+    </div>
+    <div class="slide-index">TEMAS DEL CURSO</div>
+  </section>
+
+  <!-- Minuto 7 - 11 -->
+  <section class="slide" data-index="1" style="--accent: var(--violet);">
+    <span class="eyebrow">Búsqueda guiada</span>
+    <h1>Ejemplos de avances tecnológicos</h1>
+
+    <div class="task-callout">
+      Deben buscar <b>10 tecnologías</b> y relacionar cada una con alguno de los cinco temas anteriores.
+      Esta tabla es solo una guía.
+    </div>
+
+    <div class="chip-row" id="chipRow">
+      <div class="chip active" data-filter="todos">Todos</div>
+      <div class="chip" data-filter="Conservación">Conservación de la energía</div>
+      <div class="chip" data-filter="Termodinámica">Termodinámica</div>
+      <div class="chip" data-filter="Electromagnetismo">Electromagnetismo</div>
+      <div class="chip" data-filter="Ondas">Ondas</div>
+      <div class="chip" data-filter="planos">Interpretación de planos y datos</div>
+    </div>
+
+    <table class="data" id="techTable">
+      <thead>
+        <tr><th>Avance tecnológico</th><th>Tema principal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Paneles solares</td><td>Conservación de la energía / Electromagnetismo</td></tr>
+        <tr><td>Vehículos eléctricos</td><td>Electromagnetismo</td></tr>
+        <tr><td>Trenes de levitación magnética</td><td>Electromagnetismo</td></tr>
+        <tr><td>Horno microondas</td><td>Ondas electromagnéticas</td></tr>
+        <tr><td>Resonancia magnética</td><td>Electromagnetismo</td></tr>
+        <tr><td>Redes WiFi</td><td>Ondas</td></tr>
+        <tr><td>Fibra óptica</td><td>Ondas</td></tr>
+        <tr><td>Impresoras 3D</td><td>Interpretación de planos y datos</td></tr>
+        <tr><td>Drones</td><td>Conservación de la energía / Electromagnetismo</td></tr>
+        <tr><td>Robots industriales</td><td>Electromagnetismo e interpretación de planos</td></tr>
+        <tr><td>Aire acondicionado / bomba de calor</td><td>Termodinámica</td></tr>
+        <tr><td>Motores de combustión interna</td><td>Termodinámica</td></tr>
+      </tbody>
+    </table>
+    <div class="slide-index">AVANCES TECNOLÓGICOS</div>
+  </section>
+
+  <div class="nav">
+    <button class="navbtn" id="prevBtn">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="navbtn" id="nextBtn">›</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var current = 0;
+
+  var dotsWrap = document.getElementById('dots');
+  slides.forEach(function(_, i){
+    var d = document.createElement('div');
+    d.className = 'dot-nav' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(d);
+  });
+  var dotEls = Array.prototype.slice.call(dotsWrap.children);
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var progressBar = document.getElementById('progressBar');
+
+  function render(){
+    slides.forEach(function(s, i){ s.classList.toggle('active', i === current); });
+    dotEls.forEach(function(d, i){ d.classList.toggle('active', i === current); });
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    progressBar.style.width = ((current + 1) / total * 100) + '%';
+  }
+  function goTo(i){
+    if (i < 0 || i >= total || i === current) return;
+    current = i; render();
+  }
+  prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+  nextBtn.addEventListener('click', function(){ goTo(current + 1); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
+    else if (e.key === 'ArrowLeft') goTo(current - 1);
+  });
+
+  // ---------- filtro de la tabla de avances tecnológicos ----------
+  var chips = document.querySelectorAll('#chipRow .chip');
+  var techRows = document.querySelectorAll('#techTable tbody tr');
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(function(c){ c.classList.remove('active'); });
+      chip.classList.add('active');
+      var filter = chip.getAttribute('data-filter');
+
+      techRows.forEach(function(row){
+        if (filter === 'todos'){
+          row.classList.remove('dim', 'hit');
+          return;
+        }
+        var text = row.children[1].textContent;
+        if (text.indexOf(filter) !== -1){
+          row.classList.remove('dim');
+          row.classList.add('hit');
+        } else {
+          row.classList.remove('hit');
+          row.classList.add('dim');
+        }
+      });
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

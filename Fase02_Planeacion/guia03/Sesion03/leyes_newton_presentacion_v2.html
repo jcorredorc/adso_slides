@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Las Tres Leyes de Newton</title>
+
+<style>
+  @font-face{ font-family:'sysmono'; src:local('Consolas'), local('Menlo'), local('Monaco'); }
+
+  :root{
+    --base03:#002b36; --base02:#073642; --base01:#586e75; --base00:#657b83;
+    --base0:#839496; --base1:#93a1a1; --base2:#eee8d5; --base3:#fdf6e3;
+    --blue:#268bd2; --cyan:#2aa198; --green:#859900; --orange:#cb4b16;
+    --yellow:#b58900; --violet:#6c71c4; --red:#dc322f; --magenta:#d33682;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; }
+  body{
+    font-family:-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--base03); color: var(--base01);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+
+  .deck{
+    width:min(96vw, 1100px); height:min(94vh, 700px);
+    background: var(--base3); border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    position:relative; overflow:hidden;
+  }
+
+  .slide{
+    position:absolute; inset:0; padding:3.2em 3.6em 2.4em 3.6em;
+    opacity:0; visibility:hidden; transform: translateX(40px);
+    transition: opacity .45s ease, transform .45s ease;
+  }
+  .slide.active{ opacity:1; visibility:visible; transform:translateX(0); }
+  .slide.leaving{ transform: translateX(-40px); }
+
+  h1{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-weight:800; letter-spacing:-0.5px;
+    color: var(--base02); font-size:1.9em; margin:0 0 0.2em 0;
+    border-bottom:4px solid var(--blue); display:inline-block; padding-bottom:0.12em;
+  }
+  h3{ font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.85em; margin:0 0 0.4em 0; }
+  p, li{ font-size:0.8em; line-height:1.35; }
+
+  .eyebrow{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.55em; letter-spacing:3px;
+    text-transform:uppercase; color: var(--cyan); display:block; margin-bottom:0.3em;
+  }
+
+  .law-tag{
+    display:inline-block; font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.5em;
+    letter-spacing:2px; color: var(--base3); padding:0.25em 0.6em; border-radius:3px; margin-bottom:0.5em;
+  }
+
+  .grid2{ display:grid; grid-template-columns: 1.05fr 1fr; gap:2em; align-items:start; margin-top:0.5em; }
+
+  .panel{
+    background: var(--base2); border:1px solid var(--base1);
+    border-left:5px solid var(--accent, var(--blue));
+    border-radius:6px; padding:0.85em 1.05em; margin-bottom:0.6em;
+  }
+  .panel h3{ color: var(--accent, var(--blue)); }
+  .panel ul{ margin:0; padding-left:1.1em; }
+  .panel li{ margin-bottom:0.22em; }
+
+  .lab{
+    background: var(--base3); border:2px dashed var(--accent, var(--blue));
+    border-radius:10px; padding:0.9em; min-height:250px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .lab-label{
+    position:absolute; top:0.6em; left:0.8em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.55em; letter-spacing:2px; text-transform:uppercase; color: var(--accent); opacity:0.85;
+  }
+
+  .btn{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.6em; letter-spacing:1px;
+    background: var(--accent, var(--blue)); color: var(--base3); border:none;
+    padding:0.55em 1em; border-radius:5px; cursor:pointer; margin-top:0.7em;
+    box-shadow:0 3px 0 rgba(0,0,0,0.18); transition: transform .08s ease;
+  }
+  .btn:active{ transform: translateY(2px); box-shadow:0 1px 0 rgba(0,0,0,0.18); }
+  .btn.secondary{ background: var(--base01); padding:0.3em 0.7em; margin-top:0; }
+
+  .question-box{
+    margin-top:0.55em; background: var(--base02); color: var(--base2);
+    border-radius:6px; padding:0.65em 0.9em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.6em; display:flex; align-items:center; gap:0.6em;
+  }
+  .question-box .q-mark{ font-size:1.4em; color: var(--accent); font-weight:800; }
+
+  .checklist{ list-style:none; padding:0; margin:0; }
+  .checklist li{
+    display:flex; align-items:center; gap:0.6em; margin-bottom:0.45em; font-size:0.85em;
+    opacity:0; transform:translateX(15px); transition:opacity .35s ease, transform .35s ease;
+  }
+  .checklist li.show{ opacity:1; transform:translateX(0); }
+  .checklist .dot{
+    width:1.4em; height:1.4em; border-radius:50%; background:var(--base2);
+    border:2px solid var(--blue); display:flex; align-items:center; justify-content:center;
+    font-size:0.7em; color:var(--blue); flex-shrink:0;
+  }
+
+  .icon-row{ display:flex; gap:1.3em; margin-top:1em; }
+  .icon-item{ text-align:center; font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.55em; color:var(--base01); }
+  .icon-item svg{ width:48px; height:48px; }
+
+  .slide-index{
+    position:absolute; bottom:0.9em; right:1.1em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.55em; color: var(--base1); letter-spacing:2px;
+  }
+
+  .slider-row{ display:flex; align-items:center; gap:0.6em; margin:0.5em 0; font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.6em; }
+  .slider-row input[type=range]{ flex:1; accent-color: var(--accent); }
+  .slider-row .val{ width:2.2em; text-align:right; color:var(--accent); font-weight:700; }
+
+  .readout{
+    font-family:'Consolas','Menlo','Monaco',monospace; font-size:0.72em; text-align:center;
+    color: var(--base02); background: var(--base2); border-radius:6px; padding:0.4em;
+    margin-top:0.5em; display:flex; align-items:center; justify-content:center; gap:0.8em;
+  }
+  .readout b{ color: var(--accent); }
+
+  .fadein{ opacity:0; transform:translateY(8px); transition:opacity .35s ease, transform .35s ease; }
+  .fadein.show{ opacity:1; transform:translateY(0); }
+
+  /* --- nav controls --- */
+  .nav{
+    position:absolute; bottom:0; left:0; right:0; height:46px;
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    background: linear-gradient(to top, rgba(0,0,0,0.05), transparent);
+  }
+  .navbtn{
+    width:34px; height:34px; border-radius:50%; border:1.5px solid var(--base01);
+    background: var(--base3); color: var(--base01); font-size:16px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:.15s;
+  }
+  .navbtn:hover{ background: var(--blue); color:var(--base3); border-color:var(--blue); }
+  .navbtn:disabled{ opacity:0.3; cursor:default; background:var(--base3); color:var(--base01); border-color:var(--base01); }
+  .dots{ display:flex; gap:8px; }
+  .dot-nav{
+    width:9px; height:9px; border-radius:50%; background: var(--base1); cursor:pointer; transition:.15s;
+  }
+  .dot-nav.active{ background: var(--blue); width:22px; border-radius:5px; }
+
+  .progress{ position:absolute; top:0; left:0; height:4px; background: var(--blue); transition: width .4s ease; z-index:5; }
+
+  .hint{
+    position:absolute; top:1em; right:1.2em; font-family:'Consolas','Menlo','Monaco',monospace;
+    font-size:0.5em; color: var(--base1); letter-spacing:1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+  <div class="progress" id="progressBar" style="width:25%;"></div>
+  <div class="hint">← → para navegar</div>
+
+  <!-- ===================== SLIDE 1 ===================== -->
+  <section class="slide active" data-index="0">
+    <span class="eyebrow">Física en movimiento</span>
+    <h1>Las Tres Leyes de Newton</h1>
+
+    <div class="grid2" style="grid-template-columns:1.15fr 0.9fr;">
+      <div>
+        <p>La física está presente en nuestra vida diaria. Cada vez que caminamos, montamos bicicleta,
+        lanzamos una pelota o empujamos un objeto, estamos observando las Leyes de Newton en acción.</p>
+
+        <div class="icon-row">
+          <div class="icon-item">
+            <svg viewBox="0 0 64 64"><circle cx="32" cy="14" r="7" fill="var(--blue)"/><line x1="32" y1="21" x2="32" y2="42" stroke="var(--base01)" stroke-width="4"/><line x1="32" y1="26" x2="18" y2="34" stroke="var(--base01)" stroke-width="4"/><line x1="32" y1="26" x2="46" y2="20" stroke="var(--base01)" stroke-width="4"/><line x1="32" y1="42" x2="20" y2="58" stroke="var(--base01)" stroke-width="4"/><line x1="32" y1="42" x2="44" y2="56" stroke="var(--base01)" stroke-width="4"/></svg>
+            Caminar
+          </div>
+          <div class="icon-item">
+            <svg viewBox="0 0 64 64"><circle cx="16" cy="46" r="8" fill="none" stroke="var(--cyan)" stroke-width="3"/><circle cx="48" cy="46" r="8" fill="none" stroke="var(--cyan)" stroke-width="3"/><line x1="16" y1="46" x2="30" y2="30" stroke="var(--base01)" stroke-width="3"/><line x1="30" y1="30" x2="48" y2="46" stroke="var(--base01)" stroke-width="3"/><line x1="30" y1="30" x2="24" y2="20" stroke="var(--base01)" stroke-width="3"/></svg>
+            Bicicleta
+          </div>
+          <div class="icon-item">
+            <svg viewBox="0 0 64 64"><circle cx="46" cy="18" r="9" fill="var(--orange)"/><path d="M8 50 Q30 10 46 18" stroke="var(--base01)" stroke-width="2" fill="none" stroke-dasharray="4 3"/></svg>
+            Lanzar
+          </div>
+          <div class="icon-item">
+            <svg viewBox="0 0 64 64"><rect x="10" y="26" width="16" height="16" fill="var(--green)"/><rect x="38" y="26" width="16" height="16" fill="none" stroke="var(--base01)" stroke-width="3"/><path d="M28 34 L36 34" stroke="var(--base02)" stroke-width="3" marker-end="url(#arrow1)"/><defs><marker id="arrow1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--base02)"/></marker></defs></svg>
+            Empujar
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel" style="border-left-color: var(--blue);">
+          <h3 style="color:var(--blue);">Para esta evidencia necesitas</h3>
+          <ul class="checklist" id="checklist1">
+            <li><span class="dot">1</span> Comprender una ley</li>
+            <li><span class="dot">2</span> Diseñar un experimento sencillo</li>
+            <li><span class="dot">3</span> Explicar qué ocurre</li>
+            <li><span class="dot">4</span> Relacionarlo con la vida real o la tecnología</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="slide-index">01 / 04 — INTRODUCCIÓN</div>
+  </section>
+
+  <!-- ===================== SLIDE 2 — LEY 1 ===================== -->
+  <section class="slide" data-index="1" style="--accent: var(--blue);">
+    <span class="law-tag" style="background:var(--blue);">LEY I · INERCIA</span>
+    <h1 style="border-color:var(--blue);">Primera Ley de Newton</h1>
+
+    <div class="grid2">
+      <div>
+        <div class="panel">
+          <h3>¿Qué dice?</h3>
+          <p style="margin:0;">Un objeto permanece en reposo o en movimiento rectilíneo uniforme
+          mientras ninguna fuerza externa actúe sobre él.</p>
+        </div>
+        <div class="panel">
+          <h3>Ejemplos cotidianos</h3>
+          <ul>
+            <li>Un balón permanece quieto hasta que alguien lo patea.</li>
+            <li>Al frenar el auto, los pasajeros van hacia adelante.</li>
+            <li>La bicicleta sigue avanzando aunque dejes de pedalear.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Ideas de experimento</h3>
+          <ul>
+            <li>🪙 Moneda, tarjeta y vaso</li>
+            <li>⚽ Balón quieto que luego es empujado</li>
+            <li>📖 Libro sobre una mesa</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="lab">
+          <span class="lab-label">Simulación · moneda, tarjeta y vaso</span>
+          <svg viewBox="0 0 260 200" width="100%" style="max-width:300px;">
+            <path d="M95 120 L100 190 L160 190 L165 120 Z" fill="none" stroke="var(--base01)" stroke-width="3"/>
+            <rect id="card1" x="88" y="105" width="84" height="8" rx="1" fill="var(--orange)"/>
+            <circle id="coin1" cx="130" cy="98" r="10" fill="var(--yellow)" stroke="var(--base02)" stroke-width="1.5"/>
+            <g id="flick1" opacity="0">
+              <path d="M40 108 L82 108" stroke="var(--red)" stroke-width="4" marker-end="url(#arrowRed)"/>
+            </g>
+            <defs>
+              <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
+                <path d="M0,0 L6,3 L0,6 Z" fill="var(--red)"/>
+              </marker>
+            </defs>
+          </svg>
+          <button class="btn" id="btnLaw1">▶ Golpear la tarjeta</button>
+        </div>
+
+        <div class="question-box">
+          <span class="q-mark">?</span>
+          <span>Para el video: <em>¿Qué fuerza hizo que cambiara el estado del objeto?</em></span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-index">02 / 04 — LEY DE LA INERCIA</div>
+  </section>
+
+  <!-- ===================== SLIDE 3 — LEY 2 ===================== -->
+  <section class="slide" data-index="2" style="--accent: var(--orange);">
+    <span class="law-tag" style="background:var(--orange);">LEY II · F = m·a</span>
+    <h1 style="border-color:var(--orange);">Segunda Ley de Newton</h1>
+
+    <div class="grid2">
+      <div>
+        <div class="panel">
+          <h3>¿Qué dice?</h3>
+          <p style="margin:0 0 0.3em 0;">La aceleración de un objeto depende de la fuerza aplicada
+          y de su masa.</p>
+          <p style="margin:0;"><b>Más fuerza → mayor aceleración.</b><br><b>Mayor masa → más difícil acelerar.</b></p>
+        </div>
+        <div class="panel">
+          <h3>Ejemplos e ideas de experimento</h3>
+          <ul>
+            <li>Empujar un carrito vacío y luego uno lleno.</li>
+            <li>Lanzar una pelota liviana y una pesada.</li>
+            <li>🍾 Dos botellas (vacía / llena) · 📦 dos cajas de distinto peso · 🧸 carrito de juguete con y sin carga.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="lab">
+          <span class="lab-label">Simulador · fuerza, masa y aceleración</span>
+          <svg viewBox="0 0 260 90" width="100%" style="max-width:300px;">
+            <line x1="10" y1="75" x2="250" y2="75" stroke="var(--base01)" stroke-width="2"/>
+            <g id="cart2" transform="translate(20,45)">
+              <rect x="0" y="0" width="34" height="20" rx="3" fill="var(--orange)"/>
+              <circle cx="7" cy="24" r="5" fill="var(--base02)"/>
+              <circle cx="27" cy="24" r="5" fill="var(--base02)"/>
+            </g>
+          </svg>
+
+          <div style="width:100%; max-width:300px;">
+            <div class="slider-row">
+              <span>Fuerza (N)</span>
+              <input type="range" id="forceSlider" min="1" max="10" value="5">
+              <span class="val" id="forceVal">5</span>
+            </div>
+            <div class="slider-row">
+              <span>Masa (kg)</span>
+              <input type="range" id="massSlider" min="1" max="10" value="5">
+              <span class="val" id="massVal">5</span>
+            </div>
+            <div class="readout">
+              a = F / m = <b id="accelVal">1.0</b> m/s²
+              <button class="btn secondary" id="btnLaw2">▶ Mover carrito</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-box">
+          <span class="q-mark">?</span>
+          <span>Para el video: <em>¿Por qué uno de los objetos fue más fácil de mover?</em></span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-index">03 / 04 — FUERZA, MASA Y ACELERACIÓN</div>
+  </section>
+
+  <!-- ===================== SLIDE 4 — LEY 3 ===================== -->
+  <section class="slide" data-index="3" style="--accent: var(--green);">
+    <span class="law-tag" style="background:var(--green);">LEY III · ACCIÓN – REACCIÓN</span>
+    <h1 style="border-color:var(--green);">Tercera Ley de Newton</h1>
+
+    <div class="grid2">
+      <div>
+        <div class="panel">
+          <h3>¿Qué dice?</h3>
+          <p style="margin:0;">A toda acción corresponde una reacción de igual magnitud
+          y en sentido contrario.</p>
+        </div>
+        <div class="panel">
+          <h3>Ejemplos cotidianos</h3>
+          <ul>
+            <li>🚶 Caminar</li>
+            <li>🚣 Remar</li>
+            <li>🤸 Saltar</li>
+            <li>🏊 Nadar</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Ideas de experimento</h3>
+          <ul>
+            <li>🎈 Cohete de globo (globo sobre un hilo)</li>
+            <li>🛼 Patines o silla con ruedas empujando una pared</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="lab">
+          <span class="lab-label">Simulación · cohete de globo</span>
+          <svg viewBox="0 0 300 140" width="100%" style="max-width:320px;">
+            <line x1="15" y1="35" x2="285" y2="35" stroke="var(--base01)" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <g id="balloon3" transform="translate(25,15)">
+              <ellipse cx="0" cy="0" rx="20" ry="14" fill="var(--magenta)"/>
+              <polygon points="16,0 30,-3 30,3" fill="var(--base01)"/>
+              <path id="airPuff" d="M-22 0 L-38 0" stroke="var(--red)" stroke-width="3" marker-end="url(#arrowRedSmall)" opacity="0"/>
+            </g>
+            <defs>
+              <marker id="arrowRedSmall" markerWidth="8" markerHeight="8" refX="5" refY="2.5" orient="auto">
+                <path d="M0,0 L5,2.5 L0,5 Z" fill="var(--red)"/>
+              </marker>
+            </defs>
+
+            <g id="thrust3" opacity="0">
+              <rect x="15" y="58" width="128" height="24" rx="4" fill="var(--red)"/>
+              <text x="79" y="74" font-family="Consolas, monospace" font-size="12" font-weight="700" fill="var(--base3)" text-anchor="middle">← acción: sale el aire</text>
+            </g>
+            <g id="react3" opacity="0">
+              <rect x="155" y="58" width="132" height="24" rx="4" fill="var(--green)"/>
+              <text x="221" y="74" font-family="Consolas, monospace" font-size="12" font-weight="700" fill="var(--base3)" text-anchor="middle">reacción: avanza →</text>
+            </g>
+          </svg>
+          <button class="btn" style="background:var(--green);" id="btnLaw3">▶ Soltar el globo</button>
+        </div>
+
+        <div class="question-box">
+          <span class="q-mark">?</span>
+          <span>Para el video: <em>¿Cuál fue la acción y cuál fue la reacción?</em></span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-index">04 / 04 — ACCIÓN Y REACCIÓN</div>
+  </section>
+
+  <div class="nav">
+    <button class="navbtn" id="prevBtn">‹</button>
+    <div class="dots" id="dots"></div>
+    <button class="navbtn" id="nextBtn">›</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length;
+  var current = 0;
+
+  var dotsWrap = document.getElementById('dots');
+  slides.forEach(function(_, i){
+    var d = document.createElement('div');
+    d.className = 'dot-nav' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', function(){ goTo(i); });
+    dotsWrap.appendChild(d);
+  });
+  var dotEls = Array.prototype.slice.call(dotsWrap.children);
+
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var progressBar = document.getElementById('progressBar');
+
+  function render(){
+    slides.forEach(function(s, i){
+      s.classList.toggle('active', i === current);
+      s.classList.toggle('leaving', false);
+    });
+    dotEls.forEach(function(d, i){ d.classList.toggle('active', i === current); });
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    progressBar.style.width = ((current + 1) / total * 100) + '%';
+    if (current === 0) playChecklist();
+  }
+
+  function goTo(i){
+    if (i < 0 || i >= total || i === current) return;
+    current = i;
+    render();
+  }
+
+  prevBtn.addEventListener('click', function(){ goTo(current - 1); });
+  nextBtn.addEventListener('click', function(){ goTo(current + 1); });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === ' ') { goTo(current + 1); }
+    else if (e.key === 'ArrowLeft') { goTo(current - 1); }
+  });
+
+  // ---------- checklist stagger (slide 1) ----------
+  var checklistPlayed = false;
+  function playChecklist(){
+    if (checklistPlayed) return;
+    checklistPlayed = true;
+    var items = document.querySelectorAll('#checklist1 li');
+    items.forEach(function(li, idx){
+      setTimeout(function(){ li.classList.add('show'); }, 250 + idx * 220);
+    });
+  }
+
+  // ---------- LAW 1: coin, card, glass ----------
+  var card = document.getElementById('card1');
+  var coin = document.getElementById('coin1');
+  var flick = document.getElementById('flick1');
+
+  function runLaw1(){
+    card.style.transition = 'none';
+    coin.style.transition = 'none';
+    flick.style.transition = 'none';
+    card.setAttribute('x', 88);
+    coin.setAttribute('cx', 130);
+    coin.setAttribute('cy', 98);
+    flick.setAttribute('opacity', 0);
+    card.getBoundingClientRect();
+
+    flick.style.transition = 'opacity .15s ease';
+    flick.setAttribute('opacity', 1);
+
+    setTimeout(function(){
+      card.style.transition = 'x 0.35s cubic-bezier(.3,.6,.4,1)';
+      card.setAttribute('x', 230);
+      flick.setAttribute('opacity', 0);
+    }, 180);
+
+    setTimeout(function(){
+      coin.style.transition = 'cy 0.45s cubic-bezier(.4,0,.7,1)';
+      coin.setAttribute('cy', 160);
+    }, 420);
+  }
+  document.getElementById('btnLaw1').addEventListener('click', runLaw1);
+
+  // ---------- LAW 2: F = m a ----------
+  var forceSlider = document.getElementById('forceSlider');
+  var massSlider = document.getElementById('massSlider');
+  var forceVal = document.getElementById('forceVal');
+  var massVal = document.getElementById('massVal');
+  var accelVal = document.getElementById('accelVal');
+  var cart2 = document.getElementById('cart2');
+
+  function updateLaw2(){
+    var f = parseFloat(forceSlider.value);
+    var m = parseFloat(massSlider.value);
+    var a = f / m;
+    forceVal.textContent = f;
+    massVal.textContent = m;
+    accelVal.textContent = a.toFixed(2);
+  }
+  forceSlider.addEventListener('input', updateLaw2);
+  massSlider.addEventListener('input', updateLaw2);
+  updateLaw2();
+
+  function playLaw2(){
+    var f = parseFloat(forceSlider.value);
+    var m = parseFloat(massSlider.value);
+    var a = f / m;
+    var duration = Math.max(0.35, 2.2 / a);
+    cart2.style.transition = 'none';
+    cart2.setAttribute('transform', 'translate(20,45)');
+    cart2.getBoundingClientRect();
+    cart2.style.transition = 'transform ' + duration + 's cubic-bezier(.2,.7,.3,1)';
+    requestAnimationFrame(function(){
+      cart2.setAttribute('transform', 'translate(190,45)');
+    });
+  }
+  document.getElementById('btnLaw2').addEventListener('click', playLaw2);
+
+  // ---------- LAW 3: balloon rocket ----------
+  var balloon3 = document.getElementById('balloon3');
+  var airPuff = document.getElementById('airPuff');
+  var thrust3 = document.getElementById('thrust3');
+  var react3 = document.getElementById('react3');
+
+  function runLaw3(){
+    balloon3.style.transition = 'none';
+    balloon3.setAttribute('transform', 'translate(25,15)');
+    airPuff.style.transition = 'none';
+    airPuff.setAttribute('opacity', 0);
+    thrust3.style.transition = 'none';
+    react3.style.transition = 'none';
+    thrust3.setAttribute('opacity', 0);
+    react3.setAttribute('opacity', 0);
+    balloon3.getBoundingClientRect();
+
+    // el aire sale primero (acción)
+    airPuff.style.transition = 'opacity .15s ease';
+    airPuff.setAttribute('opacity', 1);
+
+    thrust3.style.transition = 'opacity .25s ease';
+    react3.style.transition = 'opacity .25s ease .15s';
+    thrust3.setAttribute('opacity', 1);
+    react3.setAttribute('opacity', 1);
+
+    balloon3.style.transition = 'transform 0.9s cubic-bezier(.2,.7,.2,1)';
+    requestAnimationFrame(function(){
+      balloon3.setAttribute('transform', 'translate(230,15)');
+    });
+
+    setTimeout(function(){
+      airPuff.setAttribute('opacity', 0);
+    }, 500);
+
+    setTimeout(function(){
+      thrust3.setAttribute('opacity', 0);
+      react3.setAttribute('opacity', 0);
+    }, 2200);
+  }
+  document.getElementById('btnLaw3').addEventListener('click', runLaw3);
+
+  render();
+})();
+</script>
+</body>
+</html>
